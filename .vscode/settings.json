@@ -1,0 +1,6 @@
+{
+  "files.exclude": {
+    "**src/app": true
+  },
+  "git.ignoreLimitWarning": true
+}
