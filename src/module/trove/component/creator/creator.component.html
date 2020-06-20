@@ -1,0 +1,25 @@
+<div class="container" *ngIf="creator">
+  <div class="row">
+    <div class="col-12 h4">
+      {{ creator.name }}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <button
+        class="cursor-clickable year"
+        *ngFor="let year of creator._computed.years"
+        [ngClass]="{
+          'btn-primary': year === currentYear
+        }"
+        (click)="search(year);"
+        >
+        {{ year || '????' }}
+      </button>
+    </div>
+  </div>
+
+  <hr>
+
+</div>

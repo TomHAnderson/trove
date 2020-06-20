@@ -4,11 +4,15 @@ import { CreatorListComponent } from './component/creator-list/creator-list.comp
 import { TroveRoutingModule } from './trove-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { TroveLayoutComponent } from './layout/trove-layout/trove-layout.component';
+import { CreatorSearchComponent } from './component/creator-search/creator-search.component';
+import { CreatorComponent } from './component/creator/creator.component';
 
 @NgModule({
   declarations: [
     CreatorListComponent,
-    TroveLayoutComponent
+    TroveLayoutComponent,
+    CreatorSearchComponent,
+    CreatorComponent
   ],
   imports: [
     CommonModule,

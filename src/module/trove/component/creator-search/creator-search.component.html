@@ -1,13 +1,13 @@
 <div class="container">
   <div class="row">
     <div class="col-12" style="margin: .3em;">
-      <a class="btn btn-sm btn-outline-warning"
+      <a class="btn btn-sm btn-warning"
+        routerLink="/trove/list"
       >
         List
       </a>
-      <a class="btn btn-sm btn-warning"
+      <a class="btn btn-sm btn-outline-warning"
         style="margin-left: .5em;"
-        routerLink="/trove/search"
       >
         Search
       </a>
@@ -20,17 +20,21 @@
   </div>
 
   <div class="row">
-    <div class="col-12">
-      <button
-        class="cursor-clickable alphabet"
-        *ngFor="let character of alphabet()"
-        [ngClass]="{
-          'btn-primary': character === currentSearch
-        }"
-        (click)="search(character);"
-        >
-        {{ character }}
-      </button>
+    <div class="col-12" style="margin: .2em">
+      <input
+        #search
+        type="text"
+        class="form-control"
+        placeholder="Search Artist Names"
+        [(ngModel)]="artistSearch"
+        tabindex="1"
+        spellcheck="false"
+        autocapitalize="off"
+        autocorrect="off"
+        autocomplete="off"
+        placeholder="Artist Name"
+        (keyup)="submitSearch($event)"
+      >
     </div>
   </div>
 
