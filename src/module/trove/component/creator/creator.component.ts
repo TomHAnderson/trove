@@ -35,7 +35,7 @@ export class CreatorComponent implements OnInit {
       this.identifierService.findByYear(this.creator.id, year)
         .pipe(map(performanceDateVenueCoverageResult => {
           this.location.go('/trove/creator/' + this.creator.id, '?year=' + year);
-          this.titleService.setTitle('Creator ' + this.creator.name + ' &middot; ' + year);
+          this.titleService.setTitle(this.creator.name + ' · ' + year);
           this.currentYear = year;
 
           return performanceDateVenueCoverageResult;

@@ -12,4 +12,7 @@ export class TroveLayoutComponent implements OnInit {
   ngOnInit() {
   }
 
+  onActivate(event) {
+    window.scroll(0, 0);
+  }
 }

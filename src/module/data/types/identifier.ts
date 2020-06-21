@@ -11,6 +11,7 @@ export class Identifier {
   performanceDate: string;
   addedAt: Datetime;
   title: string;
+  description: string;
   uploader: string;
   venue: string;
   coverage: string;

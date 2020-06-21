@@ -12,6 +12,7 @@ import { Identifier } from '@module/data/types/identifier';
 export class IdentifierComponent implements OnInit {
   public identifier: Identifier;
   public embedUrl: SafeResourceUrl;
+  public showDescription = false;
 
   constructor(
     private titleService: Title,
@@ -24,9 +25,9 @@ export class IdentifierComponent implements OnInit {
         .subscribe(identifier => {
           this.titleService.setTitle(
             identifier._embedded.creator.name
-              + ' &middot '
+              + ' · '
               + identifier.performanceDate
-              + ' &middot '
+              + ' · '
               + identifier.archiveIdentifier
           );
 

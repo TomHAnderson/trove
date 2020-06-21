@@ -28,7 +28,7 @@ export class CreatorIdentifierPerformanceDateComponent implements OnInit {
       this.creatorService.find(params.creator_id).subscribe(creator => {
         this.creator = creator;
         this.performanceDate = params.performance_date;
-        this.titleService.setTitle(creator.name + ' &middot ' + params.performance_date);
+        this.titleService.setTitle(creator.name + ' · ' + params.performance_date);
 
         this.identifierService.findByCreatorAndPerformanceDate(creator.name, params.performance_date)
           .subscribe(halIdentifier => {

@@ -29,6 +29,19 @@
     </div>
   </div>
 
+  <a
+    class="btn btn-sm"
+    style="margin-top: 10px;"
+    (click)="showDescription = ! showDescription"
+    [ngClass]="{
+      'btn-warning': ! showDescription,
+      'btn-outline-warning': showDescription
+    }"
+  >
+    Show Description
+  </a>
+  <pre *ngIf="showDescription" style="margin-top: 10px; font-size: .5em">{{ identifier._embedded.source?.description || identifier.description || 'No description available' }}</pre>
+
   <hr>
 
   <iframe

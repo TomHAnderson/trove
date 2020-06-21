@@ -25,14 +25,16 @@ export class CreatorSearchComponent implements OnInit {
     private titleService: Title,
   ) {
     this.searchString = new Subject();
-    this.searchString.subscribe(search => {
+    this.searchString
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged()
+      )
+      .subscribe(search => {
       this.location.go('/trove/search', '?search=' + encodeURI(search));
-      this.titleService.setTitle('Search Artists matching "' + search + '"');
+      this.titleService.setTitle('Search artists matching "' + search + '"');
       this.creatorService.searchByLetter('%' + search + '%')
-        .pipe(
-          debounceTime(700),
-          distinctUntilChanged()
-        ).subscribe(halCreator => {
+        .subscribe(halCreator => {
           this.halCreator = halCreator;
           localStorage.setItem('search', search);
         });

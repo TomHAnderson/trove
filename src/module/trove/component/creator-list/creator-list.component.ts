@@ -24,7 +24,7 @@ export class CreatorListComponent implements OnInit {
 
     this.searchString.subscribe(search => {
       this.location.go('/trove/list', '?search=' + encodeURI(search));
-      this.titleService.setTitle('Search Creators matching "' + search + '"');
+      this.titleService.setTitle('Search artists matching "' + search + '"');
 
       this.creatorService.searchByLetter(search)
         .subscribe(halCreator => {
