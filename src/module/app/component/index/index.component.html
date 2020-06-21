@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 text-center">
+      <img src="/assets/icons/android-chrome-512x512.png" style="width: 200px">
+      <br>
+      <h3>Trove</h3>
+
+      <p>
+        This is a live concert streaming application which installs as an app
+        to your phone or browser.
+      </p>
+
+      <p>
+        Over 225,000 concerts are available.
+      </p>
+
+      <a
+        *ngIf="deferredInstallPrompt"
+        class="btn btn-warning btn-lg"
+        (click)="deferredInstallPrompt.prompt()"
+      >
+        Install
+      </a>
+
+      <p
+        *ngIf="! deferredInstallPrompt"
+        style="font-weight: bold;"
+      >
+        You may have already installed the app.
+        We recommend you use the app or you can
+        <a routerLink="/trove/list" class="btn btn-warning btn-sm">
+          continue with the website</a>
+      </p>
+
+      <p
+        *ngIf="! deferredInstallPrompt"
+      >
+        To reinstall follow
+        <a href="https://www.google.com/search?q=how+to+install+pwa">
+          this guide</a>.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="container" *ngIf="relatedApps">
+  <div class="row">
+    <div class="col-12">
+      Related Installed Applications
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-4">
+      <strong>ID</strong>
+    </div>
+    <div class="col-4">
+      <strong>Platform</strong>
+    </div>
+    <div class="col-4">
+      <strong>URL</strong>
+    </div>
+  </div>
+  <div class="row" *ngFor="let app of relatedApps">
+    <div class="col-4">
+      {{ app.id }}
+    </div>
+    <div class="col-4">
+      {{ app.platform }}
+    </div>
+    <div class="col-4">
+      {{ app.url }}
+    </div>
+  </div>
+</div>

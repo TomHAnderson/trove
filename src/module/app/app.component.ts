@@ -8,10 +8,23 @@ import { Title } from '@angular/platform-browser';
 })
 export class AppComponent {
   public title = 'Trove';
+  public version: string;
 
   constructor(
     private titleService: Title,
-  ) { }
+  ) {
+    // Get version
+    const xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.onreadystatechange = () => {
+      if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+        this.version = xmlhttp.responseText;
+      }
+    };
+
+    xmlhttp.open('GET', '/assets/version.txt', false );
+    xmlhttp.send();
+  }
 
   public setTitle(newTitle: string) {
     this.titleService.setTitle(newTitle);

@@ -8,11 +8,13 @@ import { PageNotFoundComponent } from './component/page-not-found/page-not-found
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '@env';
+import { IndexComponent } from './component/index/index.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    IndexComponent
   ],
   imports: [
     BrowserModule,
