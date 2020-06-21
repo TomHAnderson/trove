@@ -19,6 +19,7 @@ export class CreatorComponent implements OnInit {
   public currentYear: number;
   public year: Subject<number>;
   public performanceDateVenueCoverageResult: PerformanceDateVenueCoverageResult;
+  public noYears = false;
 
   constructor(
     private titleService: Title,
@@ -51,7 +52,12 @@ export class CreatorComponent implements OnInit {
         this.route.queryParams.subscribe(qparams => {
           let currentYear = qparams.year;
 
-          if (! currentYear) {
+          if (! currentYear || currentYear === 'undefined') {
+            if (! creator._computed.years.length) {
+              this.noYears = true;
+              return;
+            }
+
             currentYear = creator._computed.years[creator._computed.years.length - 1];
           }
 

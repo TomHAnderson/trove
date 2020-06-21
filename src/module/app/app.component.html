@@ -5,12 +5,6 @@
 <footer class="container">
   <hr>
 
-  <div class="row" *ngIf="version">
-    <div class="col-12 text-center">
-      <small>Version: {{ version }}</small>
-    </div>
-  </div>
-
   <div class="row">
     <div class="col-md-12">
       For administrative requests email
@@ -19,6 +13,12 @@
       &copy;<a class="cursor-outbound" href="https://etreedb.org">etreedb.org</a>
         and open source
         @<a class="cursor-outbound" href="https://github.com/etreedb/trove">github.com/etreedb/trove</a>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="version">
+    <div class="col-12">
+      <small>Version: {{ version }}</small>
     </div>
   </div>
 </footer>

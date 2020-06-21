@@ -37,6 +37,8 @@ export class CreatorIdentifierPerformanceDateComponent implements OnInit {
               return;
             }
 
+            console.log(halIdentifier);
+
             this.halIdentifier = halIdentifier;
           });
       });

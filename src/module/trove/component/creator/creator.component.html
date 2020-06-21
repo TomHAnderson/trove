@@ -1,11 +1,11 @@
-<div class="container" *ngIf="performanceDateVenueCoverageResult">
+<div class="container" *ngIf="creator">
   <div class="row">
     <div class="col-12 h4">
       {{ creator.name }}
     </div>
   </div>
 
-  <div class="row">
+  <div class="row" *ngIf="performanceDateVenueCoverageResult">
     <div class="col-12">
       <button
         class="cursor-clickable year"
@@ -22,7 +22,16 @@
 
   <hr>
 
-  <div class="container">
+  <div *ngIf="noYears" class="alert alert-danger">
+    No recordings found for this artist.
+    <br>
+    <br>
+    Although this artist exists in Trove there are no recordings for them.
+    This is an artifact of the data structure Trove uses.  Please excuse
+    the inconvience.  We'd like to solve the problem too.
+  </div>
+
+  <div class="container" *ngIf="performanceDateVenueCoverageResult">
     <div
       class="row identifier"
       (click)="dateDetail(performanceDateVenueCoverage.performanceDate)"
