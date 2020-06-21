@@ -5,6 +5,9 @@ import { AppComponent } from './app.component';
 import { TroveModule } from '@module/trove/trove.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PageNotFoundComponent } from './component/page-not-found/page-not-found.component';
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '@env';
 
 @NgModule({
   declarations: [
@@ -15,7 +18,9 @@ import { PageNotFoundComponent } from './component/page-not-found/page-not-found
     BrowserModule,
     AppRoutingModule,
     TroveModule,
-    NgbModule
+    NgbModule,
+    LoadingBarHttpClientModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]

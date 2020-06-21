@@ -3,6 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { CreatorListComponent } from './component/creator-list/creator-list.component';
 import { CreatorSearchComponent } from './component/creator-search/creator-search.component';
 import { CreatorComponent } from './component/creator/creator.component';
+// tslint:disable-next-line:max-line-length
+import { CreatorIdentifierPerformanceDateComponent } from './component/creator-identifier-performance-date/creator-identifier-performance-date.component';
+import { IdentifierComponent } from './component/identifier/identifier.component';
 
 const routes: Routes = [
   {
@@ -16,6 +19,14 @@ const routes: Routes = [
   {
     path: 'creator/:id',
     component: CreatorComponent
+  },
+  {
+    path: 'creator-identifier-performance-date/:creator_id/:performance_date',
+    component: CreatorIdentifierPerformanceDateComponent
+  },
+  {
+    path: 'identifier/:id',
+    component: IdentifierComponent
   }
 ];
 

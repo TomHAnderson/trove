@@ -63,4 +63,10 @@ export class CreatorSearchComponent implements OnInit {
   submitSearch($event): void {
     this.searchString.next(this.artistSearch);
   }
+
+  clearSearch() {
+    this.searchString.next('');
+    this.halCreator = null;
+    setTimeout(() => this.searchElement.nativeElement.focus(), 0);
+  }
 }

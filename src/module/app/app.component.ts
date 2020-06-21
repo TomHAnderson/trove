@@ -7,12 +7,11 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Trove';
+  public title = 'Trove';
 
   constructor(
     private titleService: Title,
-  ) {}
-
+  ) { }
 
   public setTitle(newTitle: string) {
     this.titleService.setTitle(newTitle);

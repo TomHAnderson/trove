@@ -6,13 +6,17 @@ import { SharedModule } from '../shared/shared.module';
 import { TroveLayoutComponent } from './layout/trove-layout/trove-layout.component';
 import { CreatorSearchComponent } from './component/creator-search/creator-search.component';
 import { CreatorComponent } from './component/creator/creator.component';
+import { CreatorIdentifierPerformanceDateComponent } from './component/creator-identifier-performance-date/creator-identifier-performance-date.component';
+import { IdentifierComponent } from './component/identifier/identifier.component';
 
 @NgModule({
   declarations: [
     CreatorListComponent,
     TroveLayoutComponent,
     CreatorSearchComponent,
-    CreatorComponent
+    CreatorComponent,
+    CreatorIdentifierPerformanceDateComponent,
+    IdentifierComponent
   ],
   imports: [
     CommonModule,

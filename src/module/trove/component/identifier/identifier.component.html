@@ -1,0 +1,40 @@
+<div class="container" *ngIf="identifier">
+  <div class="row">
+    <div class="col-12">
+      <a [routerLink]="['/trove/creator', identifier._embedded.creator.id]" [queryParams]="{year: identifier.year}" class="h4">
+        {{ identifier._embedded.creator.name }}
+      </a>
+      <br>
+      <span class="h5">
+        <a [routerLink]="['/trove/creator-identifier-performance-date', identifier._embedded.creator.id, identifier.performanceDate]">
+          {{ identifier.performanceDate }}
+        </a>
+        <br>
+        {{ identifier.venue }}
+        <br>
+        {{ identifier.coverage }}
+      </span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <small>{{ identifier.archiveIdentifier }}</small>
+
+      <div
+        *ngIf="identifier._embedded.source?.summary"
+        [innerHtml]="identifier._embedded.source?.summary"
+        style="border: solid; border-color: #ef9b49"
+      >
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <iframe
+    [src]="embedUrl"
+    width="100%"
+    height="380px"
+    frameborder="0"
+  ></iframe>
+</div>

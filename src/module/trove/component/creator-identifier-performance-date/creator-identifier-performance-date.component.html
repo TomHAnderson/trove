@@ -1,0 +1,27 @@
+<div class="container" *ngIf="halIdentifier">
+  <div class="row">
+    <div class="col-12 h4">
+      {{ creator.name }}
+      <br>
+      {{ performanceDate }}
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <div
+      class="col-12 identifier"
+      (click)="identifierDetail(identifier.id)"
+      *ngFor="let identifier of halIdentifier._embedded.identifier"
+    >
+      <small>{{ identifier.archiveIdentifier }}</small>
+      <div
+        *ngIf="identifier._embedded.source?.summary"
+        [innerHtml]="identifier._embedded.source?.summary"
+        style="border: solid; border-color: #ef9b49"
+      >
+      </div>
+    </div>
+  </div>
+</div>
