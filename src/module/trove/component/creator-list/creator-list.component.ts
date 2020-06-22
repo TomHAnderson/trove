@@ -4,7 +4,8 @@ import { Location } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 import { CreatorService } from '@module/data/service/creator.service';
 import { HalCreator } from '@module/data/types/hal-creator';
-import * as localforage from 'localforage';
+import { Router } from '@angular/router';
+import { DatabaseService } from '@module/data/service/database.service';
 
 @Component({
   selector: 'app-creator-list',
@@ -20,17 +21,20 @@ export class CreatorListComponent implements OnInit {
     private location: Location,
     private titleService: Title,
     private creatorService: CreatorService,
+    private router: Router,
+    private databaseService: DatabaseService
   ) {
     this.searchString = new Subject();
 
     this.searchString.subscribe(search => {
       this.location.go('/trove/list', '?search=' + encodeURI(search));
+      this.location.replaceState('/trove/list/?search=' + encodeURI(search));
       this.titleService.setTitle('Search artists matching "' + search + '"');
 
       this.creatorService.searchByLetter(search)
         .subscribe(halCreator => {
           this.halCreator = halCreator;
-          localforage.setItem('list', search);
+          this.databaseService.setItem('list', search);
         });
 
       this.currentSearch = search.replace('%', '');
@@ -38,7 +42,7 @@ export class CreatorListComponent implements OnInit {
   }
 
   public ngOnInit() {
-    from(localforage.getItem('list')).subscribe((search: string) => {
+    this.databaseService.getItem('list').subscribe((search: string) => {
       this.currentSearch = search;
 
       if (this.currentSearch) {
@@ -71,5 +75,9 @@ export class CreatorListComponent implements OnInit {
     }
 
     return alphabet;
+  }
+
+  public creatorDetail(id) {
+    this.router.navigate(['/trove/creator',  id]);
   }
 }

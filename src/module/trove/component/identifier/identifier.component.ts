@@ -1,17 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Title, DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { IdentifierService } from '@module/data/service/identifier.service';
 import { Identifier } from '@module/data/types/identifier';
-import * as localforage from 'localforage';
-import { from } from 'rxjs';
+import { DatabaseService } from '@module/data/service/database.service';
 
 @Component({
   selector: 'app-identifier',
   templateUrl: './identifier.component.html',
   styleUrls: ['./identifier.component.scss']
 })
-export class IdentifierComponent implements OnInit {
+export class IdentifierComponent {
   public identifier: Identifier;
   public embedUrl: SafeResourceUrl;
   public showDescription = false;
@@ -22,6 +21,7 @@ export class IdentifierComponent implements OnInit {
     private route: ActivatedRoute,
     private identifierService: IdentifierService,
     public sanitizer: DomSanitizer,
+    private databaseService: DatabaseService
   ) {
     this.route.params.subscribe(params => {
       this.identifierService.find(params.id)
@@ -35,7 +35,7 @@ export class IdentifierComponent implements OnInit {
           );
 
           const storageIdentifier = 'identifier_' + identifier.id;
-          from(localforage.getItem(storageIdentifier))
+          this.databaseService.getItem(storageIdentifier)
             .subscribe(result => this.isFavorite = Boolean(result));
 
           this.embedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -49,21 +49,17 @@ export class IdentifierComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-  }
-
   public toggleFavorite() {
     const identifier = 'identifier_' + this.identifier.id;
 
-    from(localforage.getItem(identifier)).subscribe(result => {
+    this.databaseService.getItem(identifier).subscribe(result => {
       if (result) {
-        localforage.removeItem(identifier);
+        this.databaseService.removeItem(identifier);
         this.isFavorite = false;
       } else {
-        localforage.setItem(identifier, this.identifier);
+        this.databaseService.setItem(identifier, this.identifier);
         this.isFavorite = true;
       }
     });
   }
-
 }

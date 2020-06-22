@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Observable, of, Subject, from } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap, catchError } from 'rxjs/operators';
+import { Subject, from } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { CreatorService } from '@module/data/service/creator.service';
 import { HalCreator } from '@module/data/types/hal-creator';
-import { Location } from '@angular/common';
 import { Title } from '@angular/platform-browser';
-import * as localforage from 'localforage';
+import { Router } from '@angular/router';
+import { DatabaseService } from '@module/data/service/database.service';
 
 @Component({
   selector: 'app-creator-search',
@@ -22,31 +22,29 @@ export class CreatorSearchComponent implements OnInit {
 
   constructor(
     private creatorService: CreatorService,
-    private location: Location,
     private titleService: Title,
+    private router: Router,
+    private databaseService: DatabaseService
   ) {
     this.searchString = new Subject();
-    this.searchString
-      .pipe(
-        debounceTime(500),
-        distinctUntilChanged()
-      )
-      .subscribe(search => {
-      this.location.go('/trove/search', '?search=' + encodeURI(search));
+
+    this.searchString.pipe(
+      debounceTime(500),
+      distinctUntilChanged()
+    ).subscribe(search => {
       this.titleService.setTitle('Search artists matching "' + search + '"');
       this.creatorService.searchByLetter('%' + search + '%')
         .subscribe(halCreator => {
           this.halCreator = halCreator;
-          localforage.setItem('search', search);
+          this.databaseService.setItem('search', search);
         });
 
       this.artistSearch = search.replace('%', '');
     });
-
   }
 
   ngOnInit(): void {
-    from(localforage.getItem('search')).subscribe((search: string) => {
+    this.databaseService.getItem('search').subscribe((search: string) => {
       this.artistSearch = search;
 
       if (this.artistSearch) {
@@ -66,13 +64,17 @@ export class CreatorSearchComponent implements OnInit {
       });
   }
 
-  submitSearch($event): void {
+  public submitSearch($event): void {
     this.searchString.next(this.artistSearch);
   }
 
-  clearSearch() {
+  public clearSearch() {
     this.searchString.next('');
     this.halCreator = null;
     setTimeout(() => this.searchElement.nativeElement.focus(), 0);
+  }
+
+  public creatorDetail(id) {
+    this.router.navigate(['/trove/creator',  id]);
   }
 }

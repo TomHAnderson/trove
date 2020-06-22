@@ -28,10 +28,11 @@
   <hr>
 
   <div class="row" *ngIf="halCreator">
-    <div class="col-12 creator" *ngFor="let creator of halCreator._embedded.creator">
-      <a [routerLink]="['/trove/creator', creator.id]">
+    <div
+      class="col-12 creator"
+      (click)="creatorDetail(creator.id)"
+      *ngFor="let creator of halCreator._embedded.creator">
         {{ creator.name }}
-      </a>
     </div>
   </div>
 

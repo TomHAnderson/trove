@@ -1,27 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { from } from 'rxjs';
-import { Creator } from '@module/data/types/creator';
-import * as localforage from 'localforage';
+import { Component } from '@angular/core';
 import { Identifier } from '@module/data/types/identifier';
 import { Router } from '@angular/router';
+import { DatabaseService } from '@module/data/service/database.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-favorite-identifier',
   templateUrl: './favorite-identifier.component.html',
   styleUrls: ['./favorite-identifier.component.scss']
 })
-export class FavoriteIdentifierComponent implements OnInit {
+export class FavoriteIdentifierComponent {
   public identifiers: Identifier[];
 
   constructor(
-    public router: Router
+    public router: Router,
+    public databaseService: DatabaseService,
+    private titleService: Title
   ) {
     this.identifiers = [];
 
-    from(localforage.keys()).subscribe(keys => {
+    this.titleService.setTitle('Favorite recordings');
+
+    this.databaseService.keys().subscribe(keys => {
       keys.forEach(key => {
         if (key.substr(0, 10) === 'identifier') {
-          from(localforage.getItem(key))
+          this.databaseService.getItem(key)
             .subscribe((identifier: Identifier) => {
               this.identifiers.push(identifier);
 
@@ -33,15 +36,10 @@ export class FavoriteIdentifierComponent implements OnInit {
             });
         }
       });
-      console.log(keys);
     });
-  }
-
-  ngOnInit(): void {
   }
 
   public identifierDetail(id) {
     this.router.navigate(['/trove/identifier',  id]);
   }
-
 }

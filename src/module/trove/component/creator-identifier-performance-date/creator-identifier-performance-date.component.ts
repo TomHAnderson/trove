@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Creator } from '@module/data/types/creator';
@@ -12,7 +12,7 @@ import { Location } from '@angular/common';
   templateUrl: './creator-identifier-performance-date.component.html',
   styleUrls: ['./creator-identifier-performance-date.component.scss']
 })
-export class CreatorIdentifierPerformanceDateComponent implements OnInit {
+export class CreatorIdentifierPerformanceDateComponent {
   public creator: Creator;
   public performanceDate: string;
   public halIdentifier: HalIdentifier;
@@ -46,9 +46,6 @@ export class CreatorIdentifierPerformanceDateComponent implements OnInit {
           });
       });
     });
-  }
-
-  ngOnInit(): void {
   }
 
   public identifierDetail(id) {

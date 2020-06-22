@@ -1,7 +1,9 @@
 <div class="container" *ngIf="halIdentifier">
   <div class="row">
     <div class="col-12 h4">
-      {{ creator.name }}
+      <a [routerLink]="['/trove/creator', creator.id]" [queryParams]="{year: performanceDate.substr(0, 4)}">
+        {{ creator.name }}
+      </a>
       <br>
       {{ performanceDate }}
     </div>

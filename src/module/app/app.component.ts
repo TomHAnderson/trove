@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, Event, NavigationEnd } from '@angular/router';
-import * as localforage from 'localforage';
+// tslint:disable-next-line:max-line-length
+import { createInstance, WEBSQL, INDEXEDDB, LOCALSTORAGE } from 'localforage';
+import { from } from 'rxjs';
 
 // tslint:disable-next-line:ban-types
 declare let ga: Function;
@@ -20,18 +22,16 @@ export class AppComponent {
     private router: Router
   ) {
 
-    localforage.ready().then(() => {
-      localforage.config({
-        driver: [
-          localforage.WEBSQL,
-          localforage.INDEXEDDB,
-          localforage.LOCALSTORAGE
-        ],
-        name: 'Trove'
-      });
+    // Configure LocalForage
+    createInstance({
+      driver: [
+        WEBSQL,
+        INDEXEDDB,
+        LOCALSTORAGE
+      ],
+      name: 'Trove'
     });
 
-    // Configure LocalForage
 
     this.router.events.subscribe((event: Event) => {
       // Google Analytics

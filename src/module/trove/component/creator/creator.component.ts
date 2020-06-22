@@ -1,21 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CreatorService } from '@module/data/service/creator.service';
 import { Creator } from '@module/data/types/creator';
-import { Subject, from } from 'rxjs';
+import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IdentifierService } from '@module/data/service/identifier.service';
 import { Location } from '@angular/common';
 import { PerformanceDateVenueCoverageResult } from '@module/data/types/performance-date-venue-coverage-result';
-import * as localforage from 'localforage';
+import { DatabaseService } from '@module/data/service/database.service';
 
 @Component({
   selector: 'app-creator',
   templateUrl: './creator.component.html',
   styleUrls: ['./creator.component.scss']
 })
-export class CreatorComponent implements OnInit {
+export class CreatorComponent {
   public creator: Creator;
   public currentYear: number;
   public year: Subject<number>;
@@ -30,6 +30,7 @@ export class CreatorComponent implements OnInit {
     private creatorService: CreatorService,
     private identifierService: IdentifierService,
     private location: Location,
+    private databaseService: DatabaseService
   ) {
     this.year = new Subject();
 
@@ -52,7 +53,7 @@ export class CreatorComponent implements OnInit {
         this.creator = creator;
 
         const identifier = 'creator_' + this.creator.id;
-        from(localforage.getItem(identifier))
+        this.databaseService.getItem(identifier)
           .subscribe(result => this.isFavorite = Boolean(result));
 
         this.route.queryParams.subscribe(qparams => {
@@ -73,18 +74,15 @@ export class CreatorComponent implements OnInit {
      });
   }
 
-  public ngOnInit() {
-  }
-
   public toggleFavorite() {
     const identifier = 'creator_' + this.creator.id;
 
-    from(localforage.getItem(identifier)).subscribe(result => {
+    this.databaseService.getItem(identifier).subscribe(result => {
       if (result) {
-        localforage.removeItem(identifier);
+        this.databaseService.removeItem(identifier);
         this.isFavorite = false;
       } else {
-        localforage.setItem(identifier, this.creator);
+        this.databaseService.setItem(identifier, this.creator);
         this.isFavorite = true;
       }
     });
