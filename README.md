@@ -6,7 +6,7 @@ api.etreedb.org has a complete copy of the Live Music Archive (LMA) data hosted 
 Trove uses this data through the use of public APIs to create a very simple interface for browsing and playing
 concerts from the LMA.
 
-Where possible LMA data is cross referenced with [etreedb.org](https://etreedb.org] to provide more complete
+Where possible LMA data is cross referenced with [etreedb.org](https://etreedb.org) to provide more complete
 source data for each recording.  The etreedb.org source data takes precedent.  Source information is displayed 
 with each recording including the description file for a complete record of the source.
 
