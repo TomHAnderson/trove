@@ -1,7 +1,7 @@
 Trove
 =====
 
-This is a project of etreedb.org.  Using data gathering and cross referencing techniques developed over years
+This is a project of [etreedb.org](https://etreedb.org).  Using data gathering and cross referencing techniques developed over years
 api.etreedb.org has a complete copy of the Live Music Archive (LMA) data hosted at the [Internet Archive](https://archive.org).
 Trove uses this data through the use of public APIs to create a very simple interface for browsing and playing
 concerts from the LMA.
