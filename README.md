@@ -33,7 +33,7 @@ Installation
 Clone the repository and edit the `src/environments/environment.ts` file to point to api.etreedb.org.  See
 the `src/environments/environment.prod.ts` file for an example.
 
-Install the required packages by running from the root folder
+Install the required packages by running from the project root folder
 
 ```
 npm install
@@ -54,3 +54,6 @@ Contributing
 ------------
 
 You must adhere to the [Code of Conduct](CODE_OF_CONDUCT.md)
+
+Pull requests are welcome and will be throughly vetted.  All pull requests must be on a branch and not from 
+your master branch.  It is recommended you discuss new features in the issues before starting new work.
