@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { createInstance, WEBSQL, INDEXEDDB, LOCALSTORAGE } from 'localforage';
-import { AnonymousSubject } from 'rxjs/internal/Subject';
 import { from, Observable } from 'rxjs';
 
 @Injectable({

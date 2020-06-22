@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@env';
-import * as $ from 'jquery';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Creator } from '../types/creator';
 import { HalCreator } from '../types/hal-creator';
 import { HalLink } from '../types/hal-link';
+import * as $ from 'jquery';
 
 @Injectable({
   providedIn: 'root'

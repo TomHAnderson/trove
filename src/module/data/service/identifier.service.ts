@@ -4,9 +4,9 @@ import { Observable } from 'rxjs';
 import { HalLink } from '../types/hal-link';
 import { HalIdentifier } from '../types/hal-identifier';
 import { environment } from '@env';
-import * as $ from 'jquery';
 import { PerformanceDateVenueCoverageResult } from '../types/performance-date-venue-coverage-result';
 import { Identifier } from '../types/identifier';
+import * as $ from 'jquery';
 
 @Injectable({
   providedIn: 'root'
