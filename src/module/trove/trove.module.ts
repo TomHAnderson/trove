@@ -10,6 +10,7 @@ import { CreatorIdentifierPerformanceDateComponent } from './component/creator-i
 import { IdentifierComponent } from './component/identifier/identifier.component';
 import { FavoriteCreatorComponent } from './component/favorite-creator/favorite-creator.component';
 import { FavoriteIdentifierComponent } from './component/favorite-identifier/favorite-identifier.component';
+import { HelpComponent } from './component/help/help.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { FavoriteIdentifierComponent } from './component/favorite-identifier/fav
     CreatorIdentifierPerformanceDateComponent,
     IdentifierComponent,
     FavoriteCreatorComponent,
-    FavoriteIdentifierComponent
+    FavoriteIdentifierComponent,
+    HelpComponent
   ],
   imports: [
     CommonModule,

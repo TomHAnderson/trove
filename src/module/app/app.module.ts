@@ -9,12 +9,14 @@ import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '@env';
 import { IndexComponent } from './component/index/index.component';
+import { HelpComponent } from './component/help/help.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PageNotFoundComponent,
-    IndexComponent
+    IndexComponent,
+    HelpComponent
   ],
   imports: [
     BrowserModule,
