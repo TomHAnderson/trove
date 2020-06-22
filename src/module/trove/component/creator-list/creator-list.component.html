@@ -12,6 +12,15 @@
         >
         {{ character }}
       </button>
+      <button
+        class="cursor-clickable alphabet"
+        [ngClass]="{
+          'btn-primary': ! currentSearch
+        }"
+        (click)="search('');"
+        >
+        [ ]
+      </button>
     </div>
   </div>
 
