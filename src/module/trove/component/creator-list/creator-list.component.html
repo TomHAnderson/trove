@@ -1,23 +1,4 @@
 <div class="container">
-  <div class="row">
-    <div class="col-12" style="margin: .3em;">
-      <a class="btn btn-sm btn-outline-warning"
-      >
-        List
-      </a>
-      <a class="btn btn-sm btn-warning"
-        style="margin-left: .5em;"
-        routerLink="/trove/search"
-      >
-        Search
-      </a>
-      <a class="btn btn-sm btn-warning"
-        style="margin-left: .5em;"
-      >
-        Favorites
-      </a>
-    </div>
-  </div>
 
   <div class="row">
     <div class="col-12">
@@ -37,7 +18,7 @@
   <hr>
 
   <div class="row" *ngIf="halCreator">
-    <div class="col-12" *ngFor="let creator of halCreator._embedded.creator">
+    <div class="col-12 creator" *ngFor="let creator of halCreator._embedded.creator">
       <a [routerLink]="['/trove/creator', creator.id]">
         {{ creator.name }}
       </a>

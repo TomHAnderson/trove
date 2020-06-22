@@ -1,0 +1,12 @@
+<div class="container">
+
+  <hr>
+
+  <div class="row">
+    <div class="col-12 creator" *ngFor="let creator of creators">
+      <a [routerLink]="['/trove/creator', creator.id]">
+        {{ creator.name }}
+      </a>
+    </div>
+  </div>
+</div>

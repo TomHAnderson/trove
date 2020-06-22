@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, from } from 'rxjs';
 import { Location } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 import { CreatorService } from '@module/data/service/creator.service';
 import { HalCreator } from '@module/data/types/hal-creator';
+import * as localforage from 'localforage';
 
 @Component({
   selector: 'app-creator-list',
@@ -29,7 +30,7 @@ export class CreatorListComponent implements OnInit {
       this.creatorService.searchByLetter(search)
         .subscribe(halCreator => {
           this.halCreator = halCreator;
-          localStorage.setItem('list', search);
+          localforage.setItem('list', search);
         });
 
       this.currentSearch = search.replace('%', '');
@@ -37,12 +38,15 @@ export class CreatorListComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.currentSearch = localStorage.getItem('list');
-    if (this.currentSearch) {
-      this.searchString.next(this.currentSearch);
-    } else {
-      this.searchString.next('A');
-    }
+    from(localforage.getItem('list')).subscribe((search: string) => {
+      this.currentSearch = search;
+
+      if (this.currentSearch) {
+        this.searchString.next(this.currentSearch);
+      } else {
+        this.searchString.next('A');
+      }
+    });
   }
 
   public search(search) {

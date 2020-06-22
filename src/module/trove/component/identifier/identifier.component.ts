@@ -3,6 +3,8 @@ import { Title, DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
 import { ActivatedRoute } from '@angular/router';
 import { IdentifierService } from '@module/data/service/identifier.service';
 import { Identifier } from '@module/data/types/identifier';
+import * as localforage from 'localforage';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-identifier',
@@ -13,6 +15,7 @@ export class IdentifierComponent implements OnInit {
   public identifier: Identifier;
   public embedUrl: SafeResourceUrl;
   public showDescription = false;
+  public isFavorite = false;
 
   constructor(
     private titleService: Title,
@@ -31,6 +34,10 @@ export class IdentifierComponent implements OnInit {
               + identifier.archiveIdentifier
           );
 
+          const storageIdentifier = 'identifier_' + identifier.id;
+          from(localforage.getItem(storageIdentifier))
+            .subscribe(result => this.isFavorite = Boolean(result));
+
           this.embedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
             'https://archive.org/embed/' + identifier.archiveIdentifier + '?playlist=1&list_height=800'
           );
@@ -43,6 +50,20 @@ export class IdentifierComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  public toggleFavorite() {
+    const identifier = 'identifier_' + this.identifier.id;
+
+    from(localforage.getItem(identifier)).subscribe(result => {
+      if (result) {
+        localforage.removeItem(identifier);
+        this.isFavorite = false;
+      } else {
+        localforage.setItem(identifier, this.identifier);
+        this.isFavorite = true;
+      }
+    });
   }
 
 }

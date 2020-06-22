@@ -1,0 +1,34 @@
+<div class="container">
+  <hr>
+
+  <div class="container" *ngIf="identifiers">
+    <div
+      class="row identifier"
+      (click)="identifierDetail(identifier.id)"
+      *ngFor="let identifier of identifiers"
+    >
+      <div class="col-md-3">
+        <strong>
+          {{ identifier._embedded.creator.name}}
+          <br>
+          {{ identifier.performanceDate || '????-??-??' }}</strong>
+      </div>
+      <div class="col-md-5">
+        {{ identifier.venue }}
+      </div>
+      <div class="col-md-4">
+        {{ identifier.coverage }}
+      </div>
+
+      <div class="col-12 identifier">
+        <small>{{ identifier.archiveIdentifier }}</small>
+        <div
+          *ngIf="identifier._embedded.source?.summary"
+          [innerHtml]="identifier._embedded.source?.summary"
+          style="border: solid; border-color: #ef9b49"
+        >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

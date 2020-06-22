@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { Router, Event, NavigationEnd } from '@angular/router';
+import * as localforage from 'localforage';
+
+// tslint:disable-next-line:ban-types
+declare let ga: Function;
 
 @Component({
   selector: 'app-root',
@@ -12,7 +17,30 @@ export class AppComponent {
 
   constructor(
     private titleService: Title,
+    private router: Router
   ) {
+
+    localforage.ready().then(() => {
+      localforage.config({
+        driver: [
+          localforage.WEBSQL,
+          localforage.INDEXEDDB,
+          localforage.LOCALSTORAGE
+        ],
+        name: 'Trove'
+      });
+    });
+
+    // Configure LocalForage
+
+    this.router.events.subscribe((event: Event) => {
+      // Google Analytics
+      if (event instanceof NavigationEnd) {
+        ga('set', 'page', router.url);
+        ga('send', 'pageview');
+      }
+    });
+
     // Get version
     const xmlhttp = new XMLHttpRequest();
 

@@ -5,6 +5,7 @@ import { Creator } from '@module/data/types/creator';
 import { CreatorService } from '@module/data/service/creator.service';
 import { IdentifierService } from '@module/data/service/identifier.service';
 import { HalIdentifier } from '@module/data/types/hal-identifier';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-creator-identifier-performance-date',
@@ -20,6 +21,7 @@ export class CreatorIdentifierPerformanceDateComponent implements OnInit {
     private titleService: Title,
     private route: ActivatedRoute,
     private router: Router,
+    private location: Location,
     private creatorService: CreatorService,
     private identifierService: IdentifierService
   ) {
@@ -34,6 +36,7 @@ export class CreatorIdentifierPerformanceDateComponent implements OnInit {
           .subscribe(halIdentifier => {
             if (halIdentifier._embedded.identifier.length === 1) {
               this.router.navigate(['/trove/identifier', halIdentifier._embedded.identifier[0].id]);
+              this.location.replaceState('/trove/identifier/' + halIdentifier._embedded.identifier[0].id);
               return;
             }
 

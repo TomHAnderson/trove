@@ -6,6 +6,53 @@
       </a>
     </div>
   </div>
+
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12" style="margin: .3em;">
+      <a class="btn btn-sm"
+        [ngClass]="{
+          'btn-warning': url !== '/trove/list',
+          'btn-outline-warning': url === '/trove/list'
+        }"
+        routerLink="/trove/list"
+      >
+        List
+      </a>
+      <a class="btn btn-sm"
+        [ngClass]="{
+          'btn-warning': url !== '/trove/search',
+          'btn-outline-warning': url === '/trove/search'
+        }"
+        style="margin-left: .5em;"
+        routerLink="/trove/search"
+      >
+        Search
+      </a>
+      <a class="btn btn-sm"
+        [ngClass]="{
+          'btn-warning': url !== '/trove/favorite-creator',
+          'btn-outline-warning': url === '/trove/favorite-creator'
+        }"
+        style="margin-left: .5em;"
+        routerLink="/trove/favorite-creator"
+      >
+        Favorite
+      </a>
+      <a class="btn btn-sm"
+        [ngClass]="{
+          'btn-warning': url !== '/trove/favorite-identifier',
+          'btn-outline-warning': url === '/trove/favorite-identifier'
+        }"
+        style="margin-left: .5em;"
+        routerLink="/trove/favorite-identifier"
+      >
+        Favorite Recordings
+      </a>
+    </div>
+  </div>
 </div>
 
 <router-outlet (activate)="onActivate($event)"></router-outlet>

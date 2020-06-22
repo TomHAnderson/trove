@@ -1,6 +1,15 @@
 <div class="container" *ngIf="identifier">
   <div class="row">
     <div class="col-12">
+      <div class="float-right h4" (click)="toggleFavorite()">
+        <i class="fa-star text-warning"
+          [ngClass]="{
+            'fas': isFavorite,
+            'far': ! isFavorite
+          }"
+        ></i>
+      </div>
+
       <a [routerLink]="['/trove/creator', identifier._embedded.creator.id]" [queryParams]="{year: identifier.year}" class="h4">
         {{ identifier._embedded.creator.name }}
       </a>

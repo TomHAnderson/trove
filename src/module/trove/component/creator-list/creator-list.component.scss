@@ -3,3 +3,11 @@
   border-width: 1px;
   min-width: 1.8em;
 }
+
+.creator:nth-child(even) {
+  background: #DDD
+}
+
+.creator:nth-child(odd) {
+  background: #FFF
+}

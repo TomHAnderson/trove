@@ -3,11 +3,12 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CreatorService } from '@module/data/service/creator.service';
 import { Creator } from '@module/data/types/creator';
-import { Subject } from 'rxjs';
+import { Subject, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IdentifierService } from '@module/data/service/identifier.service';
 import { Location } from '@angular/common';
 import { PerformanceDateVenueCoverageResult } from '@module/data/types/performance-date-venue-coverage-result';
+import * as localforage from 'localforage';
 
 @Component({
   selector: 'app-creator',
@@ -20,6 +21,7 @@ export class CreatorComponent implements OnInit {
   public year: Subject<number>;
   public performanceDateVenueCoverageResult: PerformanceDateVenueCoverageResult;
   public noYears = false;
+  public isFavorite = false;
 
   constructor(
     private titleService: Title,
@@ -49,6 +51,10 @@ export class CreatorComponent implements OnInit {
       this.creatorService.find(params.id).subscribe(creator => {
         this.creator = creator;
 
+        const identifier = 'creator_' + this.creator.id;
+        from(localforage.getItem(identifier))
+          .subscribe(result => this.isFavorite = Boolean(result));
+
         this.route.queryParams.subscribe(qparams => {
           let currentYear = qparams.year;
 
@@ -68,6 +74,20 @@ export class CreatorComponent implements OnInit {
   }
 
   public ngOnInit() {
+  }
+
+  public toggleFavorite() {
+    const identifier = 'creator_' + this.creator.id;
+
+    from(localforage.getItem(identifier)).subscribe(result => {
+      if (result) {
+        localforage.removeItem(identifier);
+        this.isFavorite = false;
+      } else {
+        localforage.setItem(identifier, this.creator);
+        this.isFavorite = true;
+      }
+    });
   }
 
   public search(year) {

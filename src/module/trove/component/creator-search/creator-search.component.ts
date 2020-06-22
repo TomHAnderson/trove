@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, of, Subject, from } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, catchError } from 'rxjs/operators';
 import { CreatorService } from '@module/data/service/creator.service';
 import { HalCreator } from '@module/data/types/hal-creator';
 import { Location } from '@angular/common';
 import { Title } from '@angular/platform-browser';
+import * as localforage from 'localforage';
 
 @Component({
   selector: 'app-creator-search',
@@ -36,7 +37,7 @@ export class CreatorSearchComponent implements OnInit {
       this.creatorService.searchByLetter('%' + search + '%')
         .subscribe(halCreator => {
           this.halCreator = halCreator;
-          localStorage.setItem('search', search);
+          localforage.setItem('search', search);
         });
 
       this.artistSearch = search.replace('%', '');
@@ -45,11 +46,14 @@ export class CreatorSearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.artistSearch = localStorage.getItem('search');
-    if (this.artistSearch) {
-      this.searchString.next(this.artistSearch);
-    }
-    setTimeout(() => this.searchElement.nativeElement.focus(), 0);
+    from(localforage.getItem('search')).subscribe((search: string) => {
+      this.artistSearch = search;
+
+      if (this.artistSearch) {
+        this.searchString.next(this.artistSearch);
+      }
+      setTimeout(() => this.searchElement.nativeElement.focus(), 0);
+    });
   }
 
   public onScroll() {
