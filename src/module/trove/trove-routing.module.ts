@@ -8,6 +8,7 @@ import { CreatorIdentifierPerformanceDateComponent } from './component/creator-i
 import { IdentifierComponent } from './component/identifier/identifier.component';
 import { FavoriteCreatorComponent } from './component/favorite-creator/favorite-creator.component';
 import { FavoriteIdentifierComponent } from './component/favorite-identifier/favorite-identifier.component';
+import { MoreComponent } from './component/more/more.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,10 @@ const routes: Routes = [
   {
     path: 'favorite-identifier',
     component: FavoriteIdentifierComponent
+  },
+  {
+    path: 'more',
+    component: MoreComponent
   }
 ];
 

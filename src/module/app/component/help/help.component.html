@@ -7,6 +7,16 @@
       </a>
     </div>
     <div class="col-3 text-right">
+      <a class="btn btn-warning"
+        *ngIf="bookmark"
+        style="margin-right: 10px;"
+        [routerLink]="['/trove/identifier', bookmark.id]"
+        >
+        <i class="fas fa-bookmark"
+          title="Jump to Bookmark"
+        ></i>
+      </a>
+
       <a
         class="btn"
         style="background-color: white;"
@@ -64,6 +74,15 @@
     a marker that you have listened to the recording and when you listened to
     it.  When browsing a date with multiple recordings the icon will be on
     any recording you have already listened to.
+  </p>
+
+  <h4>Bookmark</h4>
+  <p>
+    You can book one and only one recording at a time.  When a bookmark exists
+    a <a class="btn btn-sm btn-warning"><i class="fas fa-bookmark"></i></a>
+    icon appears next to the help button at the very top.  Clicking this will
+    take you back to the bookmarked recording.  The button updates every couple
+    seconds.
   </p>
 
   <h4>Open Source</h4>

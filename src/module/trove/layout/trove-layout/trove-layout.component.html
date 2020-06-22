@@ -7,6 +7,16 @@
       </a>
     </div>
     <div class="col-3 text-right">
+      <a class="btn btn-warning"
+        *ngIf="bookmark"
+        style="margin-right: 10px;"
+        [routerLink]="['/trove/identifier', bookmark.id]"
+        >
+        <i class="fas fa-bookmark"
+          title="Jump to Bookmark"
+      ></i>
+    </a>
+
       <a
         class="btn btn-warning"
         routerLink="/help"
@@ -19,7 +29,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-12" style="margin: .3em;">
+    <div class="col-12" style="margin-top: .3em; margin-bottom: .3em;">
       <a class="btn btn-sm"
         [ngClass]="{
           'btn-warning': url !== '/trove/list',
@@ -46,8 +56,9 @@
         }"
         style="margin-left: .5em;"
         routerLink="/trove/favorite-creator"
+        title="Favorite Artists"
       >
-        Favorite
+        F. Artists
       </a>
       <a class="btn btn-sm"
         [ngClass]="{
@@ -56,9 +67,23 @@
         }"
         style="margin-left: .5em;"
         routerLink="/trove/favorite-identifier"
+        title="Favorite Recordings"
       >
-        Fav. Recordings
+        F. Recordings
       </a>
+      <!--
+      <a class="btn btn-sm"
+        [ngClass]="{
+          'btn-warning': url !== '/trove/more',
+          'btn-outline-warning': url === '/trove/more'
+        }"
+        style="margin-left: .5em;"
+        routerLink="/trove/more"
+        title="even more..."
+      >
+        ...
+      </a>
+      -->
     </div>
   </div>
 </div>

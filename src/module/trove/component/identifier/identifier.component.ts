@@ -15,6 +15,7 @@ export class IdentifierComponent {
   public embedUrl: SafeResourceUrl;
   public showDescription = false;
   public isFavorite = false;
+  public isBookmarked = false;
   public listenedAt: Date;
 
   constructor(
@@ -34,6 +35,9 @@ export class IdentifierComponent {
               + ' · '
               + identifier.archiveIdentifier
           );
+
+          this.databaseService.getItem('bookmark')
+            .subscribe(result => this.isBookmarked = result?.id === identifier.id);
 
           const storageIdentifier = 'identifier_' + identifier.id;
           this.databaseService.getItem(storageIdentifier)
@@ -57,6 +61,20 @@ export class IdentifierComponent {
 
           this.identifier = identifier;
         });
+    });
+  }
+
+  public toggleBookmark() {
+    const identifier = 'bookmark';
+
+    this.databaseService.getItem(identifier).subscribe(result => {
+      if (result?.id === this.identifier.id) {
+        this.databaseService.removeItem(identifier);
+        this.isBookmarked = null;
+      } else {
+        this.isBookmarked = true;
+        this.databaseService.setItem(identifier, this.identifier);
+      }
     });
   }
 

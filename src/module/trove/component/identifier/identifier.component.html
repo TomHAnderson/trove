@@ -23,6 +23,15 @@
             'far': ! listenedAt
           }"
         ></i>
+        <br>
+        <i class="fa-bookmark text-warning"
+          (click)="toggleBookmark()"
+          title="Bookmark"
+          [ngClass]="{
+            'fas': isBookmarked,
+            'far': ! isBookmarked
+          }"
+        ></i>
       </div>
 
       <a [routerLink]="['/trove/creator', identifier._embedded.creator.id]" [queryParams]="{year: identifier.year}" class="h4">
