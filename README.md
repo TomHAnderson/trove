@@ -1,27 +1,54 @@
-# Trove
+Trove
+=====
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.1.
+This is a project of etreedb.org.  Using data gathering and cross referencing techniques developed over years
+api.etreedb.org has a complete copy of the Live Music Archive (LMA) data hosted at the [Internet Archive](https://archive.org).
+Trove uses this data through the use of public APIs to create a very simple interface for browsing and playing
+concerts from the LMA.
 
-## Development server
+Where possible LMA data is cross referenced with [etreedb.org](https://etreedb.org] to provide more complete
+source data for each recording.  The etreedb.org source data takes precedent.  Source information is displayed 
+with each recording including the description file for a complete record of the source.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Trove is a progressive web app (PWA) written in Angular 9 which can be installed as a phone or browser application.
 
-## Code scaffolding
+The goals of Trove are 
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+* Keep a simple interface without clutter.  
+* Speed to find, select, and play a recording is paramount.
 
-## Build
+Towards these ends there are not links to etreedb.org for detailed records, links to the LMA besides
+what is provided in the player, or links to any other sites.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Running unit tests
+Requirements
+------------
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+npm and associated node applications.
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Installation
+------------
 
-## Further help
+Clone the repository and edit the `src/environments/environment.ts` file to point to api.etreedb.org.  See
+the `src/environments/environment.prod.ts` file for an example.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Install the required packages by running from the root folder
+
+```
+npm install
+```
+
+
+Run 
+---
+
+```ng serve``` 
+
+then browse to http://localhost:4200
+
+
+Contributing 
+------------
+
+You must adhere to the [Code of Conduct](CODE_OF_CONDUCT.md)
