@@ -7,16 +7,6 @@
       </a>
     </div>
     <div class="col-7 text-right">
-      <a class="btn btn-warning"
-        *ngIf="bookmark"
-        style="margin-right: 10px;"
-        [routerLink]="['/trove/identifier', bookmark.id]"
-        >
-        <i class="fas fa-bookmark"
-          title="Jump to Bookmark"
-        ></i>
-      </a>
-
       <a
         class="btn"
         style="background-color: white;"
@@ -81,8 +71,7 @@
     You can book one and only one recording at a time.  When a bookmark exists
     a <a class="btn btn-sm btn-warning"><i class="fas fa-bookmark"></i></a>
     icon appears next to the help button at the very top.  Clicking this will
-    take you back to the bookmarked recording.  The button updates every couple
-    seconds.
+    take you back to the bookmarked recording.
   </p>
 
   <h4>Open Source</h4>

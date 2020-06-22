@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, Event, NavigationEnd } from '@angular/router';
 import { Identifier } from '@module/data/types/identifier';
 import { DatabaseService } from '@module/data/service/database.service';
-import { Observable, timer } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-trove-layout',
   templateUrl: './trove-layout.component.html',
   styleUrls: ['./trove-layout.component.scss']
 })
-export class TroveLayoutComponent implements OnInit {
+export class TroveLayoutComponent {
   public url: string;
   public bookmark: Identifier;
   public bookmarkTimer: Observable<any>;
@@ -25,17 +25,16 @@ export class TroveLayoutComponent implements OnInit {
       }
     });
 
-    this.bookmarkTimer = timer(1500, 1500);
-    this.bookmarkTimer.subscribe(time => {
-      this.databaseService.getItem('bookmark')
-        .subscribe(identifier => this.bookmark = identifier);
-    });
+    this.fetchBookmark();
   }
 
-  ngOnInit() {
+  public fetchBookmark() {
+    // Fetch the current bookmark
+    this.databaseService.getItem('bookmark')
+      .subscribe(identifier => this.bookmark = identifier);
   }
 
-  onActivate(event) {
+  public onActivate(event) {
     window.scroll(0, 0);
   }
 }

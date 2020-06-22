@@ -9,17 +9,8 @@ import { Observable, timer } from 'rxjs';
   styleUrls: ['./help.component.scss']
 })
 export class HelpComponent implements OnInit {
-  public bookmark: Identifier;
-  private bookmarkTimer: Observable<any>;
-
   constructor(
-    private databaseService: DatabaseService
   ) {
-    this.bookmarkTimer = timer(1500, 1500);
-    this.bookmarkTimer.subscribe(time => {
-      this.databaseService.getItem('bookmark')
-        .subscribe(identifier => this.bookmark = identifier);
-    });
   }
 
   ngOnInit(): void {

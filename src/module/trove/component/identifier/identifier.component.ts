@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IdentifierService } from '@module/data/service/identifier.service';
 import { Identifier } from '@module/data/types/identifier';
 import { DatabaseService } from '@module/data/service/database.service';
+import { TroveLayoutComponent } from '@module/trove/layout/trove-layout/trove-layout.component';
 
 @Component({
   selector: 'app-identifier',
@@ -23,7 +24,8 @@ export class IdentifierComponent {
     private route: ActivatedRoute,
     private identifierService: IdentifierService,
     public sanitizer: DomSanitizer,
-    private databaseService: DatabaseService
+    private databaseService: DatabaseService,
+    private troveLayout: TroveLayoutComponent
   ) {
     this.route.params.subscribe(params => {
       this.identifierService.find(params.id)
@@ -69,11 +71,13 @@ export class IdentifierComponent {
 
     this.databaseService.getItem(identifier).subscribe(result => {
       if (result?.id === this.identifier.id) {
-        this.databaseService.removeItem(identifier);
+        this.databaseService.removeItem(identifier)
+          .subscribe(() => this.troveLayout.fetchBookmark());
         this.isBookmarked = null;
       } else {
         this.isBookmarked = true;
-        this.databaseService.setItem(identifier, this.identifier);
+        this.databaseService.setItem(identifier, this.identifier)
+          .subscribe(() => this.troveLayout.fetchBookmark());
       }
     });
   }
