@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createInstance, WEBSQL, INDEXEDDB, LOCALSTORAGE } from 'localforage';
 import { from, Observable } from 'rxjs';
+import { typeWithParameters } from '@angular/compiler/src/render3/util';
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +21,12 @@ export class DatabaseService {
     });
   }
 
-  public setItem(key, value): Observable<any> {
-    return from(this.database.setItem(key, value));
-  }
-
   public getItem(key): Observable<any> {
     return from(this.database.getItem(key));
+  }
+
+  public setItem(key, value): Observable<any> {
+    return from(this.database.setItem(key, value));
   }
 
   public removeItem(key): Observable<any> {

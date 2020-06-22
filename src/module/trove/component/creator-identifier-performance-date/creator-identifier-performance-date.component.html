@@ -17,6 +17,14 @@
       (click)="identifierDetail(identifier.id)"
       *ngFor="let identifier of halIdentifier._embedded.identifier"
     >
+      <div class="float-right h4">
+        <small>
+          <i class="fas fa-head-side-headphones text-warning"
+            *ngIf="keys.includes('listened_' + identifier.id)"
+            title="Mark as listened"
+          ></i>
+        </small>
+      </div>
       <small>{{ identifier.archiveIdentifier }}</small>
       <div
         *ngIf="identifier._embedded.source?.summary"

@@ -15,6 +15,7 @@ export class IdentifierComponent {
   public embedUrl: SafeResourceUrl;
   public showDescription = false;
   public isFavorite = false;
+  public listenedAt: Date;
 
   constructor(
     private titleService: Title,
@@ -38,6 +39,16 @@ export class IdentifierComponent {
           this.databaseService.getItem(storageIdentifier)
             .subscribe(result => this.isFavorite = Boolean(result));
 
+          const listenedIdentifier = 'listened_' + identifier.id;
+          this.databaseService.getItem(listenedIdentifier)
+            .subscribe(result => {
+              if (result) {
+                this.listenedAt = new Date(result);
+              } else {
+                this.listenedAt = null;
+              }
+            });
+
           this.embedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
             'https://archive.org/embed/' + identifier.archiveIdentifier + '?playlist=1&list_height=800'
           );
@@ -46,6 +57,20 @@ export class IdentifierComponent {
 
           this.identifier = identifier;
         });
+    });
+  }
+
+  public toggleListened() {
+    const identifier = 'listened_' + this.identifier.id;
+
+    this.databaseService.getItem(identifier).subscribe(result => {
+      if (result) {
+        this.databaseService.removeItem(identifier);
+        this.listenedAt = null;
+      } else {
+        this.listenedAt = new Date();
+        this.databaseService.setItem(identifier, this.listenedAt);
+      }
     });
   }
 

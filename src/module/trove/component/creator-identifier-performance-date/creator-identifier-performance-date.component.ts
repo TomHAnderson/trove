@@ -6,6 +6,7 @@ import { CreatorService } from '@module/data/service/creator.service';
 import { IdentifierService } from '@module/data/service/identifier.service';
 import { HalIdentifier } from '@module/data/types/hal-identifier';
 import { Location } from '@angular/common';
+import { DatabaseService } from '@module/data/service/database.service';
 
 @Component({
   selector: 'app-creator-identifier-performance-date',
@@ -16,6 +17,7 @@ export class CreatorIdentifierPerformanceDateComponent {
   public creator: Creator;
   public performanceDate: string;
   public halIdentifier: HalIdentifier;
+  public keys: string[];
 
   constructor(
     private titleService: Title,
@@ -23,7 +25,8 @@ export class CreatorIdentifierPerformanceDateComponent {
     private router: Router,
     private location: Location,
     private creatorService: CreatorService,
-    private identifierService: IdentifierService
+    private identifierService: IdentifierService,
+    private databaseService: DatabaseService
   ) {
 
     this.route.params.subscribe(params => {
@@ -31,6 +34,8 @@ export class CreatorIdentifierPerformanceDateComponent {
         this.creator = creator;
         this.performanceDate = params.performance_date;
         this.titleService.setTitle(creator.name + ' · ' + params.performance_date);
+
+        this.databaseService.keys().subscribe(keys => this.keys = keys);
 
         this.identifierService.findByCreatorAndPerformanceDate(creator.name, params.performance_date)
           .subscribe(halIdentifier => {
