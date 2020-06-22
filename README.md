@@ -43,7 +43,9 @@ npm install
 Run 
 ---
 
-```ng serve``` 
+```
+ng serve
+``` 
 
 then browse to http://localhost:4200
 
