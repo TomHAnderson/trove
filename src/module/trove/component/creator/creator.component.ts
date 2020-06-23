@@ -30,7 +30,7 @@ export class CreatorComponent {
     private creatorService: CreatorService,
     private identifierService: IdentifierService,
     private location: Location,
-    private databaseService: DatabaseService
+    private database: DatabaseService
   ) {
     this.year = new Subject();
 
@@ -53,7 +53,7 @@ export class CreatorComponent {
         this.creator = creator;
 
         const identifier = 'creator_' + this.creator.id;
-        this.databaseService.getItem(identifier)
+        this.database.getItem(identifier)
           .subscribe(result => this.isFavorite = Boolean(result));
 
         this.route.queryParams.subscribe(qparams => {
@@ -77,12 +77,12 @@ export class CreatorComponent {
   public toggleFavorite() {
     const identifier = 'creator_' + this.creator.id;
 
-    this.databaseService.getItem(identifier).subscribe(result => {
+    this.database.getItem(identifier).subscribe(result => {
       if (result) {
-        this.databaseService.removeItem(identifier);
+        this.database.removeItem(identifier);
         this.isFavorite = false;
       } else {
-        this.databaseService.setItem(identifier, this.creator);
+        this.database.setItem(identifier, this.creator);
         this.isFavorite = true;
       }
     });

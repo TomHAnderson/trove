@@ -26,7 +26,7 @@ export class CreatorIdentifierPerformanceDateComponent {
     private location: Location,
     private creatorService: CreatorService,
     private identifierService: IdentifierService,
-    private databaseService: DatabaseService
+    private database: DatabaseService
   ) {
 
     this.route.params.subscribe(params => {
@@ -35,7 +35,7 @@ export class CreatorIdentifierPerformanceDateComponent {
         this.performanceDate = params.performance_date;
         this.titleService.setTitle(creator.name + ' · ' + params.performance_date);
 
-        this.databaseService.keys().subscribe(keys => this.keys = keys);
+        this.database.keys().subscribe(keys => this.keys = keys);
 
         this.identifierService.findByCreatorAndPerformanceDate(creator.name, params.performance_date)
           .subscribe(halIdentifier => {

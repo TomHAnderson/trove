@@ -12,17 +12,17 @@ export class FavoriteCreatorComponent {
   public creators: Creator[];
 
   constructor(
-    private databaseService: DatabaseService,
+    private database: DatabaseService,
     private titleService: Title
   ) {
     this.creators = [];
 
     this.titleService.setTitle('Favorite artists');
 
-    this.databaseService.keys().subscribe(keys => {
+    this.database.keys().subscribe(keys => {
       keys.forEach(key => {
         if (key.substr(0, 7) === 'creator') {
-          this.databaseService.getItem(key)
+          this.database.getItem(key)
             .subscribe((creator: Creator) => {
               this.creators.push(creator);
 

@@ -14,17 +14,17 @@ export class FavoriteIdentifierComponent {
 
   constructor(
     public router: Router,
-    public databaseService: DatabaseService,
+    public database: DatabaseService,
     private titleService: Title
   ) {
     this.identifiers = [];
 
     this.titleService.setTitle('Favorite recordings');
 
-    this.databaseService.keys().subscribe(keys => {
+    this.database.keys().subscribe(keys => {
       keys.forEach(key => {
         if (key.substr(0, 10) === 'identifier') {
-          this.databaseService.getItem(key)
+          this.database.getItem(key)
             .subscribe((identifier: Identifier) => {
               this.identifiers.push(identifier);
 

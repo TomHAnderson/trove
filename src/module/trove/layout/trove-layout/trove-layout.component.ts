@@ -16,7 +16,7 @@ export class TroveLayoutComponent {
 
   constructor(
     private router: Router,
-    private databaseService: DatabaseService
+    private database: DatabaseService
   ) {
     this.router.events.subscribe((event: Event) => {
       // Google Analytics
@@ -30,7 +30,7 @@ export class TroveLayoutComponent {
 
   public fetchBookmark() {
     // Fetch the current bookmark
-    this.databaseService.getItem('bookmark')
+    this.database.getItem('bookmark')
       .subscribe(identifier => this.bookmark = identifier);
   }
 

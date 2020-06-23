@@ -24,7 +24,7 @@ export class IdentifierComponent {
     private route: ActivatedRoute,
     private identifierService: IdentifierService,
     public sanitizer: DomSanitizer,
-    private databaseService: DatabaseService,
+    private database: DatabaseService,
     private troveLayout: TroveLayoutComponent
   ) {
     this.route.params.subscribe(params => {
@@ -38,15 +38,15 @@ export class IdentifierComponent {
               + identifier.archiveIdentifier
           );
 
-          this.databaseService.getItem('bookmark')
+          this.database.getItem('bookmark')
             .subscribe(result => this.isBookmarked = result?.id === identifier.id);
 
           const storageIdentifier = 'identifier_' + identifier.id;
-          this.databaseService.getItem(storageIdentifier)
+          this.database.getItem(storageIdentifier)
             .subscribe(result => this.isFavorite = Boolean(result));
 
           const listenedIdentifier = 'listened_' + identifier.id;
-          this.databaseService.getItem(listenedIdentifier)
+          this.database.getItem(listenedIdentifier)
             .subscribe(result => {
               if (result) {
                 this.listenedAt = new Date(result);
@@ -69,14 +69,14 @@ export class IdentifierComponent {
   public toggleBookmark() {
     const identifier = 'bookmark';
 
-    this.databaseService.getItem(identifier).subscribe(result => {
+    this.database.getItem(identifier).subscribe(result => {
       if (result?.id === this.identifier.id) {
-        this.databaseService.removeItem(identifier)
+        this.database.removeItem(identifier)
           .subscribe(() => this.troveLayout.fetchBookmark());
         this.isBookmarked = null;
       } else {
         this.isBookmarked = true;
-        this.databaseService.setItem(identifier, this.identifier)
+        this.database.setItem(identifier, this.identifier)
           .subscribe(() => this.troveLayout.fetchBookmark());
       }
     });
@@ -85,13 +85,13 @@ export class IdentifierComponent {
   public toggleListened() {
     const identifier = 'listened_' + this.identifier.id;
 
-    this.databaseService.getItem(identifier).subscribe(result => {
+    this.database.getItem(identifier).subscribe(result => {
       if (result) {
-        this.databaseService.removeItem(identifier);
+        this.database.removeItem(identifier);
         this.listenedAt = null;
       } else {
         this.listenedAt = new Date();
-        this.databaseService.setItem(identifier, this.listenedAt);
+        this.database.setItem(identifier, this.listenedAt);
       }
     });
   }
@@ -99,12 +99,12 @@ export class IdentifierComponent {
   public toggleFavorite() {
     const identifier = 'identifier_' + this.identifier.id;
 
-    this.databaseService.getItem(identifier).subscribe(result => {
+    this.database.getItem(identifier).subscribe(result => {
       if (result) {
-        this.databaseService.removeItem(identifier);
+        this.database.removeItem(identifier);
         this.isFavorite = false;
       } else {
-        this.databaseService.setItem(identifier, this.identifier);
+        this.database.setItem(identifier, this.identifier);
         this.isFavorite = true;
       }
     });

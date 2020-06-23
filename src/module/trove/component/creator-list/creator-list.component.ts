@@ -22,7 +22,7 @@ export class CreatorListComponent implements OnInit {
     private titleService: Title,
     private creatorService: CreatorService,
     private router: Router,
-    private databaseService: DatabaseService
+    private database: DatabaseService
   ) {
     this.searchString = new Subject();
 
@@ -34,7 +34,7 @@ export class CreatorListComponent implements OnInit {
       this.creatorService.searchByLetter(search)
         .subscribe(halCreator => {
           this.halCreator = halCreator;
-          this.databaseService.setItem('list', search);
+          this.database.setItem('list', search);
         });
 
       this.currentSearch = search.replace('%', '');
@@ -42,7 +42,7 @@ export class CreatorListComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.databaseService.getItem('list').subscribe((search: string) => {
+    this.database.getItem('list').subscribe((search: string) => {
       this.currentSearch = search;
 
       if (this.currentSearch) {
