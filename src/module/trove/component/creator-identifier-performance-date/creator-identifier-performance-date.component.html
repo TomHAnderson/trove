@@ -12,4 +12,4 @@
 
 <hr>
 
-<app-identifier-list [identifierArray]="halIdentifier._embedded.identifier"></app-identifier-list>
+<app-identifier-list *ngIf="halIdentifier" [identifierArray]="halIdentifier._embedded.identifier"></app-identifier-list>

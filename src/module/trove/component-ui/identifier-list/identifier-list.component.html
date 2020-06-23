@@ -21,14 +21,14 @@
       <small>
         <span
           class="btn btn-sm btn-warning icon"
-          *ngIf="keys.includes('identifier_' + identifier.id) && showFavoriteIcon"
+          *ngIf="keys && keys.includes('identifier_' + identifier.id) && showFavoriteIcon"
           title="Favorite"
         >
           <i class="fas fa-heart"></i>
         </span>
         <span
           class="btn btn-sm btn-warning icon"
-          *ngIf="keys.includes('listened_' + identifier.id)"
+          *ngIf="keys && keys.includes('listened_' + identifier.id)"
           title="Listened"
         >
           <i class="fas fa-head-side-headphones fa-flip-horizontal"></i>

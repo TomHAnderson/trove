@@ -5,7 +5,7 @@
 
       <span
         class="btn btn-sm btn-warning icon"
-        *ngIf="keys.includes('creator_' + creator.id) && showFavoriteIcon"
+        *ngIf="keys && keys.includes('creator_' + creator.id) && showFavoriteIcon"
         title="Favorite"
       >
         <i class="fas fa-heart"></i>
