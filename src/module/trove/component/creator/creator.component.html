@@ -1,13 +1,15 @@
 <div class="container" *ngIf="creator">
   <div class="row">
     <div class="col-12 h4">
-      <div class="float-right" (click)="toggleFavorite()">
-        <i class="fa-heart text-warning"
-          [ngClass]="{
-            'fas': isFavorite,
-            'far': ! isFavorite
-          }"
-        ></i>
+      <div class="float-right">
+        <a class="btn btn-sm btn-warning" (click)="toggleFavorite()">
+          <i class="fa-heart"
+            [ngClass]="{
+              'fas': isFavorite,
+              'far': ! isFavorite
+            }"
+          ></i>
+        </a>
       </div>
       {{ creator.name }}
     </div>
