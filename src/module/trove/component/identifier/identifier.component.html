@@ -6,32 +6,41 @@
       </div>
 
       <div class="float-right h4">
-        <i class="fa-star text-warning"
+        <a class="btn btn-sm btn-warning identifier-action"
           (click)="toggleFavorite()"
           title="Add to favorites"
-          [ngClass]="{
-            'fas': isFavorite,
-            'far': ! isFavorite
-          }"
-        ></i>
+        >
+          <i class="fa-star"
+            [ngClass]="{
+              'fas': isFavorite,
+              'far': ! isFavorite
+            }"
+          ></i>
+        </a>
         <br>
-        <i class="fa-head-side-headphones text-warning"
+        <a class="btn btn-sm btn-warning identifier-action"
           (click)="toggleListened()"
           title="Mark as listened"
-          [ngClass]="{
-            'fas': listenedAt,
-            'far': ! listenedAt
-          }"
-        ></i>
+        >
+          <i class="fa-head-side-headphones"
+            [ngClass]="{
+              'fas': listenedAt,
+              'far': ! listenedAt
+            }"
+          ></i>
+        </a>
         <br>
-        <i class="fa-bookmark text-warning"
+        <a class="btn btn-sm btn-warning identifier-action"
           (click)="toggleBookmark()"
           title="Bookmark"
-          [ngClass]="{
-            'fas': isBookmarked,
-            'far': ! isBookmarked
-          }"
-        ></i>
+        >
+          <i class="fa-bookmark"
+            [ngClass]="{
+              'fas': isBookmarked,
+              'far': ! isBookmarked
+            }"
+          ></i>
+        </a>
       </div>
 
       <a [routerLink]="['/trove/creator', identifier._embedded.creator.id]" [queryParams]="{year: identifier.year}" class="h4">
