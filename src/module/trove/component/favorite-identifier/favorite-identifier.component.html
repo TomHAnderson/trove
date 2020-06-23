@@ -1,11 +1,11 @@
 <div class="container">
   <hr>
 
-  <div class="container" *ngIf="identifiers">
+  <div class="container" *ngIf="identifierArray">
     <div
       class="row identifier"
       (click)="identifierDetail(identifier.id)"
-      *ngFor="let identifier of identifiers"
+      *ngFor="let identifier of identifierArray"
     >
       <div class="col-md-3">
         <strong>

@@ -3,6 +3,7 @@ import { Identifier } from '@module/data/types/identifier';
 import { Router } from '@angular/router';
 import { DatabaseService } from '@module/data/service/database.service';
 import { Title } from '@angular/platform-browser';
+import { NameDateIdentifier as sortIdentifierArray } from '@module/data/sort/name-date-identifier';
 
 @Component({
   selector: 'app-favorite-identifier',
@@ -10,14 +11,14 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./favorite-identifier.component.scss']
 })
 export class FavoriteIdentifierComponent {
-  public identifiers: Identifier[];
+  public identifierArray: Identifier[];
 
   constructor(
     public router: Router,
     public database: DatabaseService,
     private titleService: Title
   ) {
-    this.identifiers = [];
+    this.identifierArray = [];
 
     this.titleService.setTitle('Favorite recordings');
 
@@ -26,13 +27,9 @@ export class FavoriteIdentifierComponent {
         if (key.substr(0, 10) === 'identifier') {
           this.database.getItem(key)
             .subscribe((identifier: Identifier) => {
-              this.identifiers.push(identifier);
+              this.identifierArray.push(identifier);
 
-              this.identifiers.sort((a, b) => {
-                if (a.performanceDate < b.performanceDate) { return -1; }
-                if (a.performanceDate > b.performanceDate) { return 1; }
-                return 0;
-              });
+              sortIdentifierArray(this.identifierArray);
             });
         }
       });

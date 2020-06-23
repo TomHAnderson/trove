@@ -7,6 +7,7 @@ import { IdentifierService } from '@module/data/service/identifier.service';
 import { HalIdentifier } from '@module/data/types/hal-identifier';
 import { Location } from '@angular/common';
 import { DatabaseService } from '@module/data/service/database.service';
+import { NameDateIdentifier as sortIdentifierArray } from '@module/data/sort/name-date-identifier';
 
 @Component({
   selector: 'app-creator-identifier-performance-date',
@@ -45,7 +46,7 @@ export class CreatorIdentifierPerformanceDateComponent {
               return;
             }
 
-            console.log(halIdentifier);
+            sortIdentifierArray(halIdentifier._embedded.identifier);
 
             this.halIdentifier = halIdentifier;
           });
