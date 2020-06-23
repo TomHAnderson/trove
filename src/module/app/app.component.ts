@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 import { Router, Event, NavigationEnd } from '@angular/router';
 
 // tslint:disable-next-line:ban-types
@@ -15,7 +14,6 @@ export class AppComponent {
   public version: string;
 
   constructor(
-    private titleService: Title,
     private router: Router
   ) {
     this.router.events.subscribe((event: Event) => {
@@ -37,9 +35,5 @@ export class AppComponent {
 
     xmlhttp.open('GET', '/assets/version.txt', false );
     xmlhttp.send();
-  }
-
-  public setTitle(newTitle: string) {
-    this.titleService.setTitle(newTitle);
   }
 }
