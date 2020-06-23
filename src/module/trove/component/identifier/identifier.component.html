@@ -22,7 +22,7 @@
           (click)="toggleListened()"
           title="Mark as listened"
         >
-          <i class="fa-head-side-headphones"
+          <i class="fa-head-side-headphones fa-flip-horizontal"
             [ngClass]="{
               'fas': listenedAt,
               'far': ! listenedAt
@@ -63,9 +63,9 @@
       <small>{{ identifier.archiveIdentifier }}</small>
 
       <div
+        class="etreedb-summary"
         *ngIf="identifier._embedded.source?.summary"
         [innerHtml]="identifier._embedded.source?.summary"
-        style="border: solid; border-color: #ef9b49"
       >
       </div>
     </div>
