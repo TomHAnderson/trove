@@ -82,7 +82,10 @@
   >
     Show Description
   </a>
-  <pre *ngIf="showDescription" style="margin-top: 10px; font-size: .5em">{{ identifier._embedded.source?.description || identifier.description || 'No description available' }}</pre>
+
+  <pre class="etreedb-description" *ngIf="showDescription && identifier._embedded.source?.description">{{ identifier._embedded.source?.description }}</pre>
+
+  <pre class="description" *ngIf="showDescription && ! identifier._embedded.source?.description">{{ identifier.description || 'No description available' }}</pre>
 
   <hr>
 
