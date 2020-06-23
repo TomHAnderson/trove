@@ -26,10 +26,11 @@ export class CreatorListComponent implements OnInit {
   ) {
     this.searchString = new Subject();
 
+    this.titleService.setTitle('List Artists');
+
     this.searchString.subscribe(search => {
       this.location.go('/trove/list', '?search=' + encodeURI(search));
       this.location.replaceState('/trove/list/?search=' + encodeURI(search));
-      this.titleService.setTitle('Search artists matching "' + search + '"');
 
       this.creatorService.searchByLetter(search)
         .subscribe(halCreator => {

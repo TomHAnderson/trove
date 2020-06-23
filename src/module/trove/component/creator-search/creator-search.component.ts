@@ -28,11 +28,12 @@ export class CreatorSearchComponent implements OnInit {
   ) {
     this.searchString = new Subject();
 
+    this.titleService.setTitle('Search artists');
+
     this.searchString.pipe(
       debounceTime(500),
       distinctUntilChanged()
     ).subscribe(search => {
-      this.titleService.setTitle('Search artists matching "' + search + '"');
       this.creatorService.searchByLetter('%' + search + '%')
         .subscribe(halCreator => {
           this.halCreator = halCreator;
