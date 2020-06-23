@@ -30,6 +30,8 @@ export class IdentifierComponent {
     this.route.params.subscribe(params => {
       this.identifierService.find(params.id)
         .subscribe(identifier => {
+          this.identifier = identifier;
+
           this.titleService.setTitle(
             identifier._embedded.creator.name
               + ' · '
@@ -37,6 +39,8 @@ export class IdentifierComponent {
               + ' · '
               + identifier.archiveIdentifier
           );
+
+          this.addToRecentlyBrowsed();
 
           this.database.getItem('bookmark')
             .subscribe(result => this.isBookmarked = result?.id === identifier.id);
@@ -58,10 +62,6 @@ export class IdentifierComponent {
           this.embedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
             'https://archive.org/embed/' + identifier.archiveIdentifier + '?playlist=1&list_height=800'
           );
-
-          console.log(this.embedUrl);
-
-          this.identifier = identifier;
         });
     });
   }
@@ -107,6 +107,27 @@ export class IdentifierComponent {
         this.database.setItem(identifier, this.identifier);
         this.isFavorite = true;
       }
+    });
+  }
+
+  public addToRecentlyBrowsed() {
+    this.database.getItem('recent').subscribe((recent: Identifier[]) => {
+      if (! recent) {
+        recent = [];
+      }
+
+      // Clear existing entry if exists
+      recent = recent.filter(item => {
+        return this.identifier.id !== item.id;
+      });
+
+      // Add this entry to top of index
+      recent.unshift(this.identifier);
+
+      // Resize recent to last 30
+      recent = recent.slice(0, 30);
+
+      this.database.setItem('recent', recent);
     });
   }
 }

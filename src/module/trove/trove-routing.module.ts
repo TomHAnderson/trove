@@ -9,6 +9,7 @@ import { IdentifierComponent } from './component/identifier/identifier.component
 import { FavoriteCreatorComponent } from './component/favorite-creator/favorite-creator.component';
 import { FavoriteIdentifierComponent } from './component/favorite-identifier/favorite-identifier.component';
 import { MoreComponent } from './component/more/more.component';
+import { RecentComponent } from './component/recent/recent.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,10 @@ const routes: Routes = [
   {
     path: 'more',
     component: MoreComponent
+  },
+  {
+    path: 'recent',
+    component: RecentComponent
   }
 ];
 
