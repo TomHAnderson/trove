@@ -1,0 +1,45 @@
+<div class="container" *ngIf="identifierArray">
+  <div
+    class="row identifier"
+    (click)="identifierDetail(identifier.id)"
+    *ngFor="let identifier of identifierArray"
+  >
+    <div class="col-md-3" *ngIf="showName">
+      <strong>
+        {{ identifier._embedded.creator.name}}
+        <br>
+        {{ identifier.performanceDate || '????-??-??' }}</strong>
+    </div>
+    <div class="col-md-5" *ngIf="showName">
+      {{ identifier.venue }}
+    </div>
+    <div class="col-md-4" *ngIf="showName">
+      {{ identifier.coverage }}
+    </div>
+
+    <div class="col-12">
+      <small>
+        <span
+          class="btn btn-sm btn-warning icon"
+          *ngIf="keys.includes('identifier_' + identifier.id) && showFavoriteIcon"
+          title="Favorite"
+        >
+          <i class="fas fa-heart"></i>
+        </span>
+        <span
+          class="btn btn-sm btn-warning icon"
+          *ngIf="keys.includes('listened_' + identifier.id)"
+          title="Listened"
+        >
+          <i class="fas fa-head-side-headphones fa-flip-horizontal"></i>
+        </span>
+        <strong>{{ identifier.archiveIdentifier }}</strong>
+      </small>
+      <div
+        *ngIf="identifier._embedded.source?.summary"
+        [innerHtml]="identifier._embedded.source?.summary"
+        class="etreedb-summary"
+      ></div>
+    </div>
+  </div>
+</div>

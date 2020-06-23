@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 creator" *ngFor="let creator of creatorArray">
+      <a [routerLink]="['/trove/creator', creator.id]">
+
+      <span
+        class="btn btn-sm btn-warning icon"
+        *ngIf="keys.includes('creator_' + creator.id) && showFavoriteIcon"
+        title="Favorite"
+      >
+        <i class="fas fa-heart"></i>
+      </span>
+
+        {{ creator.name }}
+      </a>
+    </div>
+  </div>
+</div>

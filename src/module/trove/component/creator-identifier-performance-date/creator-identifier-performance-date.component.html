@@ -8,30 +8,8 @@
       {{ performanceDate }}
     </div>
   </div>
-
-  <hr>
-
-  <div class="row">
-    <div
-      class="col-12 identifier"
-      (click)="identifierDetail(identifier.id)"
-      *ngFor="let identifier of halIdentifier._embedded.identifier"
-    >
-
-      <small>
-        <i class="fas fa-head-side-headphones fa-flip-horizontal text-warning"
-          *ngIf="keys.includes('listened_' + identifier.id)"
-          title="Mark as listened"
-        ></i>
-
-        {{ identifier.archiveIdentifier }}
-      </small>
-      <div
-        class="etreedb-summary"
-        *ngIf="identifier._embedded.source?.summary"
-        [innerHtml]="identifier._embedded.source?.summary"
-      >
-      </div>
-    </div>
-  </div>
 </div>
+
+<hr>
+
+<app-identifier-list [identifierArray]="halIdentifier._embedded.identifier"></app-identifier-list>

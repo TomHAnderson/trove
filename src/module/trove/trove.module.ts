@@ -13,6 +13,8 @@ import { FavoriteCreatorComponent } from './component/favorite-creator/favorite-
 import { FavoriteIdentifierComponent } from './component/favorite-identifier/favorite-identifier.component';
 import { MoreComponent } from './component/more/more.component';
 import { RecentComponent } from './component/recent/recent.component';
+import { IdentifierListComponent } from './component-ui/identifier-list/identifier-list.component';
+import { CreatorListUiComponent } from './component-ui/creator-list-ui/creator-list-ui.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { RecentComponent } from './component/recent/recent.component';
     FavoriteIdentifierComponent,
     MoreComponent,
     RecentComponent,
+    IdentifierListComponent,
+    CreatorListUiComponent
   ],
   imports: [
     CommonModule,

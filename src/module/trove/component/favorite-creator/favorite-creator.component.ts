@@ -9,13 +9,13 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./favorite-creator.component.scss']
 })
 export class FavoriteCreatorComponent {
-  public creators: Creator[];
+  public creatorArray: Creator[];
 
   constructor(
     private database: DatabaseService,
     private titleService: Title
   ) {
-    this.creators = [];
+    this.creatorArray = [];
 
     this.titleService.setTitle('Favorite artists');
 
@@ -24,9 +24,9 @@ export class FavoriteCreatorComponent {
         if (key.substr(0, 7) === 'creator') {
           this.database.getItem(key)
             .subscribe((creator: Creator) => {
-              this.creators.push(creator);
+              this.creatorArray.push(creator);
 
-              this.creators.sort((a, b) => {
+              this.creatorArray.sort((a, b) => {
                 if (a.name < b.name) { return -1; }
                 if (a.name > b.name) { return 1; }
                 return 0;

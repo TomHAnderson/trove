@@ -36,8 +36,6 @@ export class CreatorIdentifierPerformanceDateComponent {
         this.performanceDate = params.performance_date;
         this.titleService.setTitle(creator.name + ' · ' + params.performance_date);
 
-        this.database.keys().subscribe(keys => this.keys = keys);
-
         this.identifierService.findByCreatorAndPerformanceDate(creator.name, params.performance_date)
           .subscribe(halIdentifier => {
             if (halIdentifier._embedded.identifier.length === 1) {
@@ -52,9 +50,5 @@ export class CreatorIdentifierPerformanceDateComponent {
           });
       });
     });
-  }
-
-  public identifierDetail(id) {
-    this.router.navigate(['/trove/identifier',  id]);
   }
 }

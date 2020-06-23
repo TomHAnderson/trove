@@ -35,8 +35,4 @@ export class FavoriteIdentifierComponent {
       });
     });
   }
-
-  public identifierDetail(id) {
-    this.router.navigate(['/trove/identifier',  id]);
-  }
 }

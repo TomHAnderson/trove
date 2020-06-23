@@ -23,24 +23,17 @@
       </button>
     </div>
   </div>
+</div>
 
-  <hr>
+<hr>
 
-  <div class="row" *ngIf="halCreator">
-    <div
-      class="col-12 creator"
-      (click)="creatorDetail(creator.id)"
-      *ngFor="let creator of halCreator._embedded.creator">
-        {{ creator.name }}
-    </div>
-  </div>
+<app-creator-list-ui *ngIf="halCreator" [creatorArray]="halCreator._embedded.creator"></app-creator-list-ui>
 
-  <div
-      class="search-results"
-      infiniteScroll
-      [infiniteScrollDistance]="2"
-      [infiniteScrollThrottle]="50"
-      (scrolled)="onScroll()"
-    >
-  </div>
+<div
+    class="search-results"
+    infiniteScroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="50"
+    (scrolled)="onScroll()"
+  >
 </div>
