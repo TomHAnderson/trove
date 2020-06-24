@@ -16,20 +16,21 @@
 
       <p>
         <a
-          *ngIf="deferredInstallPrompt"
           class="btn btn-warning btn-lg"
           (click)="deferredInstallPrompt.prompt()"
         >
           Install
         </a>
 
-        You may use your browser instead of the app:
+        <br>
+        or
+        <br>
+
         <a routerLink="/trove/list" class="btn btn-warning btn-sm">
-          continue to the website</a>
+          continue with the website</a>
       </p>
 
       <p
-        *ngIf="! deferredInstallPrompt"
         style="margin-top: 30px;"
       >
         To reinstall follow
