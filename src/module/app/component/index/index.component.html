@@ -14,27 +14,23 @@
         Over 215,000 concerts are available.
       </p>
 
-      <a
-        *ngIf="deferredInstallPrompt"
-        class="btn btn-warning btn-lg"
-        (click)="deferredInstallPrompt.prompt()"
-      >
-        Install
-      </a>
+      <p>
+        <a
+          *ngIf="deferredInstallPrompt"
+          class="btn btn-warning btn-lg"
+          (click)="deferredInstallPrompt.prompt()"
+        >
+          Install
+        </a>
 
-      <p
-        *ngIf="! deferredInstallPrompt"
-        style="font-weight: bold;"
-      >
-        You may have already installed the app.
-        We recommend you use the app or you can
-        <br>
+        You may use your browser instead of the app:
         <a routerLink="/trove/list" class="btn btn-warning btn-sm">
-          continue with the website</a>
+          continue to the website</a>
       </p>
 
       <p
         *ngIf="! deferredInstallPrompt"
+        style="margin-top: 30px;"
       >
         To reinstall follow
         <a href="https://www.google.com/search?q=how+to+install+pwa">
