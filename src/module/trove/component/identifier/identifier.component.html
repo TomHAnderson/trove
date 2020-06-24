@@ -1,8 +1,8 @@
 <div class="container" *ngIf="identifier">
   <div class="row">
     <div class="col-12">
-      <div class="alert alert-warning" *ngIf="listenedAt">
-        Marked as listened on {{ listenedAt | date }}
+      <div class="alert alert-warning" *ngIf="listenedTo">
+        Marked as listened on {{ listenedTo.date | stringToDate | date }}
       </div>
 
       <div class="float-right h4">
@@ -24,8 +24,8 @@
         >
           <i class="fa-head-side-headphones fa-flip-horizontal"
             [ngClass]="{
-              'fas': listenedAt,
-              'far': ! listenedAt
+              'fas': listenedTo,
+              'far': ! listenedTo
             }"
           ></i>
         </a>

@@ -4,10 +4,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { RouterModule } from '@angular/router';
+import { StringToDatePipe } from './pipe/string-to-date.pipe';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    StringToDatePipe
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -15,7 +17,6 @@ import { RouterModule } from '@angular/router';
     HttpClientModule,
     NgbModule,
     InfiniteScrollModule,
-    RouterModule
   ],
   exports: [
     FormsModule,
@@ -23,7 +24,7 @@ import { RouterModule } from '@angular/router';
     HttpClientModule,
     NgbModule,
     InfiniteScrollModule,
-    RouterModule
+    StringToDatePipe
   ]
 })
 export class SharedModule { }

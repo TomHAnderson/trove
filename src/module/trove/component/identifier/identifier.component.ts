@@ -5,6 +5,7 @@ import { IdentifierService } from '@module/data/service/identifier.service';
 import { Identifier } from '@module/data/types/identifier';
 import { DatabaseService } from '@module/data/service/database.service';
 import { TroveLayoutComponent } from '@module/trove/layout/trove-layout/trove-layout.component';
+import { ListenedTo } from '@module/data/types/listened-to';
 
 @Component({
   selector: 'app-identifier',
@@ -17,7 +18,7 @@ export class IdentifierComponent {
   public showDescription = false;
   public isFavorite = false;
   public isBookmarked = false;
-  public listenedAt: Date;
+  public listenedTo: ListenedTo;
 
   constructor(
     private titleService: Title,
@@ -52,11 +53,7 @@ export class IdentifierComponent {
           const listenedIdentifier = 'listened_' + identifier.id;
           this.database.getItem(listenedIdentifier)
             .subscribe(result => {
-              if (result) {
-                this.listenedAt = new Date(result);
-              } else {
-                this.listenedAt = null;
-              }
+              this.listenedTo = (result) ? result : null;
             });
 
           this.embedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -88,10 +85,14 @@ export class IdentifierComponent {
     this.database.getItem(identifier).subscribe(result => {
       if (result) {
         this.database.removeItem(identifier);
-        this.listenedAt = null;
+        this.listenedTo = null;
       } else {
-        this.listenedAt = new Date();
-        this.database.setItem(identifier, this.listenedAt);
+        const now = new Date();
+        this.listenedTo = new ListenedTo();
+        this.listenedTo.date = (new Date()).toString();
+        this.listenedTo.identifier = this.identifier;
+
+        this.database.setItem(identifier, this.listenedTo);
       }
     });
   }

@@ -1,0 +1,49 @@
+ <div class="container" *ngIf="listenedToArray">
+  <div class="row">
+    <div class="col-12">
+      <h3>Listened-to recordings</h3>
+      <hr>
+    </div>
+  </div>
+
+  <div
+    class="row identifier"
+    (click)="identifierDetail(listenedTo.identifier.id)"
+    *ngFor="let listenedTo of listenedToArray"
+  >
+    <div class="col-12 alert alert-warning" *ngIf="listenedTo">
+      Marked as listened on {{ listenedTo.date | stringToDate | date }}
+    </div>
+
+    <div class="col-md-3">
+      <strong>
+        {{ listenedTo.identifier._embedded.creator.name}}
+        <br>
+        {{ listenedTo.identifier.performanceDate || '????-??-??' }}</strong>
+    </div>
+    <div class="col-md-5">
+      {{ listenedTo.identifier.venue }}
+    </div>
+    <div class="col-md-4">
+      {{ listenedTo.identifier.coverage }}
+    </div>
+
+    <div class="col-12">
+      <small>
+        <span
+          class="btn btn-sm btn-warning icon"
+          *ngIf="keys && keys.includes('identifier_' + listenedTo.identifier.id)"
+          title="Favorite"
+        >
+          <i class="fas fa-heart"></i>
+        </span>
+        <strong>{{ listenedTo.identifier.archiveIdentifier }}</strong>
+      </small>
+      <div
+        *ngIf="listenedTo.identifier._embedded.source?.summary"
+        [innerHtml]="listenedTo.identifier._embedded.source?.summary"
+        class="etreedb-summary"
+      ></div>
+    </div>
+  </div>
+</div>

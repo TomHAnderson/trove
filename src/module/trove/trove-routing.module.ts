@@ -10,6 +10,7 @@ import { FavoriteCreatorComponent } from './component/favorite-creator/favorite-
 import { FavoriteIdentifierComponent } from './component/favorite-identifier/favorite-identifier.component';
 import { MoreComponent } from './component/more/more.component';
 import { RecentComponent } from './component/recent/recent.component';
+import { ListenedToComponent } from './component/listened-to/listened-to.component';
 
 const routes: Routes = [
   {
@@ -47,6 +48,10 @@ const routes: Routes = [
   {
     path: 'recent',
     component: RecentComponent
+  },
+  {
+    path: 'listened-to',
+    component: ListenedToComponent
   }
 ];
 
