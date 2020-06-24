@@ -1,8 +1,8 @@
-div.identifier:nth-child(even) {
+div.identifier:nth-child(odd) {
   background: #DDD
 }
 
-div.identifier:nth-child(odd) {
+div.identifier:nth-child(even) {
   background: #FFF
 }
 
