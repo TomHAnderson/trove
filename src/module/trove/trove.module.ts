@@ -16,6 +16,7 @@ import { RecentComponent } from './component/recent/recent.component';
 import { IdentifierListComponent } from './component-ui/identifier-list/identifier-list.component';
 import { CreatorListUiComponent } from './component-ui/creator-list-ui/creator-list-ui.component';
 import { ListenedToComponent } from './component/listened-to/listened-to.component';
+import { SettingsComponent } from './component/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ListenedToComponent } from './component/listened-to/listened-to.compone
     RecentComponent,
     IdentifierListComponent,
     CreatorListUiComponent,
-    ListenedToComponent
+    ListenedToComponent,
+    SettingsComponent
   ],
   imports: [
     CommonModule,

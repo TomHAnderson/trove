@@ -72,6 +72,16 @@
   </div>
 
   <a
+    *ngIf="identifier._embedded.source && settings.showEtreeDbSouceLink"
+    class="btn btn-sm btn-warning"
+    style="margin-top: 10px; display: block"
+    target="_blank"
+    href="https://etreedb.org/shn/{{ identifier._embedded.source?.id }}"
+  >
+    etreed.org source
+  </a>
+
+  <a
     class="btn btn-sm"
     style="margin-top: 10px;"
     (click)="showDescription = ! showDescription"

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, Event, NavigationEnd } from '@angular/router';
 import { ListenedConversion } from '@module/data/conversion/listened-conversion';
+import { SettingsService } from '@module/data/service/settings.service';
 
 // tslint:disable-next-line:ban-types
 declare let ga: Function;
@@ -16,7 +17,7 @@ export class AppComponent {
 
   constructor(
     private router: Router,
-    private listenedConversion: ListenedConversion
+    private listenedConversion: ListenedConversion,
   ) {
     this.router.events.subscribe((event: Event) => {
       // Google Analytics

@@ -6,6 +6,7 @@ import { Identifier } from '@module/data/types/identifier';
 import { DatabaseService } from '@module/data/service/database.service';
 import { TroveLayoutComponent } from '@module/trove/layout/trove-layout/trove-layout.component';
 import { ListenedTo } from '@module/data/types/listened-to';
+import { SettingsService } from '@module/data/service/settings.service';
 
 @Component({
   selector: 'app-identifier',
@@ -19,6 +20,7 @@ export class IdentifierComponent {
   public isFavorite = false;
   public isBookmarked = false;
   public listenedTo: ListenedTo;
+  public settings;
 
   constructor(
     private titleService: Title,
@@ -26,8 +28,12 @@ export class IdentifierComponent {
     private identifierService: IdentifierService,
     public sanitizer: DomSanitizer,
     private database: DatabaseService,
-    private troveLayout: TroveLayoutComponent
+    private troveLayout: TroveLayoutComponent,
+    private settingsService: SettingsService
   ) {
+
+    settingsService.get().subscribe(settings => this.settings = settings);
+
     this.route.params.subscribe(params => {
       this.identifierService.find(params.id)
         .subscribe(identifier => {
