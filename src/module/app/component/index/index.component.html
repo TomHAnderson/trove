@@ -14,7 +14,9 @@
         Over 215,000 concerts are available.
       </p>
 
-      <p>
+      <p
+        *ngIf="deferredInstallPrompt"
+      >
         <a
           class="btn btn-warning btn-lg"
           (click)="deferredInstallPrompt.prompt()"
@@ -31,11 +33,19 @@
       </p>
 
       <p
-        style="margin-top: 30px;"
+        *ngIf="! deferredInstallPrompt"
       >
         To reinstall follow
         <a href="https://www.google.com/search?q=how+to+install+pwa">
           this guide</a>.
+
+        <br>
+        or
+        <br>
+
+        <a routerLink="/trove/list" class="btn btn-warning btn-sm">
+          continue with the website</a>
+
       </p>
     </div>
   </div>
