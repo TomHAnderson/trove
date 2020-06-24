@@ -46,8 +46,6 @@ export class ListenedToComponent {
 
                 return 0;
               });
-
-              console.log(this.listenedToArray);
             });
         }
       });
