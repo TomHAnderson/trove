@@ -35,6 +35,7 @@ export class AppComponent {
 
     fromEvent(window, 'appinstalled').subscribe(event => {
       this.router.navigate(['/trove/list']);
+      this.deferredInstallPrompt = null;
     });
 
     // Get version document
