@@ -1,18 +1,18 @@
 <div class="container" style="padding: 10px">
   <div class="row header">
     <div class="col-5">
-      <a class="btn " routerLink="/trove/list" style="background-color: white;">
+      <a class="btn" routerLink="/trove/list" style="background-color: white;">
         <img style="width: 23px" src="/assets/icons/favicon-32x32.png">
         &nbsp;<strong>Trove</strong>
       </a>
 
       <a
         *ngIf="appComponent.deferredInstallPrompt"
-        class="btn btn-warning btn-lg"
+        class="btn btn-warning"
         style="margin-left: 10px;"
         (click)="appComponent.deferredInstallPrompt.prompt()"
       >
-        Install
+        Install as app
       </a>
 
     </div>
