@@ -15,11 +15,11 @@
       </p>
 
       <p
-        *ngIf="deferredInstallPrompt"
+        *ngIf="appComponent.deferredInstallPrompt"
       >
         <a
           class="btn btn-warning btn-lg"
-          (click)="deferredInstallPrompt.prompt()"
+          (click)="appComponent.deferredInstallPrompt.prompt()"
         >
           Install
         </a>
@@ -33,7 +33,7 @@
       </p>
 
       <p
-        *ngIf="! deferredInstallPrompt"
+        *ngIf="! appComponent.deferredInstallPrompt"
       >
         To reinstall follow
         <a href="https://www.google.com/search?q=how+to+install+pwa">

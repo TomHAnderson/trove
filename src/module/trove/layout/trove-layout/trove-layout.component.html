@@ -5,6 +5,16 @@
         <img style="width: 23px" src="/assets/icons/favicon-32x32.png">
         &nbsp;<strong>Trove</strong>
       </a>
+
+      <a
+        *ngIf="appComponent.deferredInstallPrompt"
+        class="btn btn-warning btn-lg"
+        style="margin-left: 10px;"
+        (click)="appComponent.deferredInstallPrompt.prompt()"
+      >
+        Install
+      </a>
+
     </div>
     <div class="col-7 text-right">
       <a class="btn btn-warning"

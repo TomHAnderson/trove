@@ -1,31 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { fromEvent } from 'rxjs';
+import { AppComponent } from '@app/app.component';
 
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.scss']
 })
-export class IndexComponent implements OnInit {
-  public deferredInstallPrompt: any;
+export class IndexComponent {
   public relatedApps: any[];
 
   constructor(
-    private router: Router
+    private router: Router,
+    public appComponent: AppComponent
   ) {
-
-    fromEvent(window, 'beforeinstallprompt').subscribe(event => {
-      event.preventDefault();
-      this.deferredInstallPrompt = event;
-    });
-
-    fromEvent(window, 'appinstalled').subscribe(event => {
-      this.router.navigate(['/trove/list']);
-    });
-
+    // This doesn't work in Chrome; it would be nice to have.
     fromEvent(window, 'load').subscribe(event => {
-//      this.router.navigate(['/trove/list']);
       if ('getInstalledRelatedApps' in window.navigator) {
         const nav: any = window.navigator;
 
@@ -39,13 +30,11 @@ export class IndexComponent implements OnInit {
       }
     });
 
+    /**
+     * If running as an app forward to list
+     */
     if (window.matchMedia('(display-mode: standalone)').matches) {
       this.router.navigate(['/trove/list']);
-    } else {
-
     }
-  }
-
-  ngOnInit(): void {
   }
 }

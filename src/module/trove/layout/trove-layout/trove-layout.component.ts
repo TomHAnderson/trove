@@ -3,6 +3,7 @@ import { Router, Event, NavigationEnd } from '@angular/router';
 import { Identifier } from '@module/data/types/identifier';
 import { DatabaseService } from '@module/data/service/database.service';
 import { Observable } from 'rxjs';
+import { AppComponent } from '@app/app.component';
 
 @Component({
   selector: 'app-trove-layout',
@@ -16,7 +17,8 @@ export class TroveLayoutComponent {
 
   constructor(
     private router: Router,
-    private database: DatabaseService
+    private database: DatabaseService,
+    public appComponent: AppComponent
   ) {
     this.router.events.subscribe((event: Event) => {
       // Google Analytics
