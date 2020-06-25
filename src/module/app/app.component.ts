@@ -15,6 +15,7 @@ export class AppComponent {
   public title = 'Trove';
   public version: string;
   public deferredInstallPrompt: any;
+  public noSleep: any;
 
   constructor(
     private router: Router,

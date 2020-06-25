@@ -72,8 +72,6 @@ export class IdentifierComponent {
 
             this.player = new HowlerPlayer(playlist);
 
-            console.log(playlist);
-
             this.player.$progress.subscribe(soundProgress => {
               this.soundProgress = soundProgress;
             });

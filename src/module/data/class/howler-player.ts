@@ -1,6 +1,6 @@
 import { Howl } from 'howler';
 import { Subject } from 'rxjs';
-import { ROUTER_CONFIGURATION } from '@angular/router';
+import NoSleep from 'nosleep.js';
 
 /**
  * From: https://stackblitz.com/edit/howler-player
@@ -26,10 +26,12 @@ export class HowlerPlayer {
   public $progress: Subject<SoundProgressInterface>;
   private currentSoundProgress: SoundProgressInterface;
   public isPlaying: boolean;
+  private noSleep: any;
 
   /** */
   constructor(playlist: SongInterface[]) {
     this.song = null;
+    this.noSleep = new NoSleep();
 
     playlist.forEach((playlistSong, index) => {
       playlist[index].index = index;
@@ -62,22 +64,21 @@ export class HowlerPlayer {
     });
   }
 
-  /** */
   public play(playSong: SongInterface = null) {
     this.stop();
 
     this.song = playSong ? playSong : this.song;
 
-    this.song.howl.stop();
     this.song.howl.play();
     this.isPlaying = true;
-}
+    this.noSleep.enable();
+  }
 
-  /** */
   public pause(): void {
     if (this.isPlaying) {
       this.song.howl.pause();
       this.isPlaying = false;
+      this.noSleep.disable();
     } else {
       const seek = this.currentSoundProgress.played;
       this.song.howl.stop();
@@ -101,6 +102,7 @@ export class HowlerPlayer {
     this.$progress.next( progress );
 
     this.isPlaying = false;
+    this.noSleep.disable();
   }
 
   /** */
