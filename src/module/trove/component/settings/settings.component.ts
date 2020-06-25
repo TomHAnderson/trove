@@ -19,6 +19,7 @@ export class SettingsComponent {
 
       this.form = new FormGroup({
         showEtreeDbSouceLink: new FormControl(this.settings?.showEtreeDbSouceLink),
+        useArchivePlayer: new FormControl(this.settings?.useArchivePlayer),
       });
 
       this.form.valueChanges.subscribe(value => {
