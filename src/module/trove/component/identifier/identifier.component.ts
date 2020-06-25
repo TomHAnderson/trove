@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Title, DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, Event, NavigationStart } from '@angular/router';
 import { IdentifierService } from '@module/data/service/identifier.service';
 import { Identifier } from '@module/data/types/identifier';
 import { DatabaseService } from '@module/data/service/database.service';
@@ -32,13 +32,20 @@ export class IdentifierComponent {
     public sanitizer: DomSanitizer,
     private database: DatabaseService,
     private troveLayout: TroveLayoutComponent,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private router: Router
   ) {
     this.soundProgress = {
       played: 0,
       remaining: 0,
       position: 0
     };
+
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationStart) {
+        this.player.stop();
+      }
+    });
 
     this.settingsService.get().subscribe(settings => this.settings = settings);
 
