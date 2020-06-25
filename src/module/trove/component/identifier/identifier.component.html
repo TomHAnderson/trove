@@ -99,31 +99,31 @@
 
   <hr>
 
-  <div class="player" *ngIf="player">
-    <a class="btn btn-warning btn-lg player-control"
-      (click)="player.skip('prev')"
-    ><i class="fas fa-arrow-alt-to-left"></i></a>
+    <table class="table player" *ngIf="player">
+      <tr>
+        <td class="text-center">
+          <a class="btn btn-warning btn-lg player-control"
+            (click)="player.skip('prev')"
+          ><i class="fas fa-arrow-alt-to-left"></i></a>
 
-    <a class="btn btn-warning btn-lg player-control"
-      (click)="player.pause()"
-    ><i class="fas"
-      [ngClass]="{
-        'fa-play': ! player.isPlaying,
-        'fa-pause': player.isPlaying
-      }"
-    ></i></a>
+          <a class="btn btn-warning btn-lg player-control"
+            (click)="player.pause()"
+          ><i class="fas"
+            [ngClass]="{
+              'fa-play': ! player.isPlaying,
+              'fa-pause': player.isPlaying
+            }"
+          ></i></a>
 
-    <a class="btn btn-warning btn-lg player-control"
-      (click)="player.skip('next')"
-    ><i class="fas fa-arrow-alt-to-right"></i></a>
+          <a class="btn btn-warning btn-lg player-control"
+            (click)="player.skip('next')"
+          ><i class="fas fa-arrow-alt-to-right"></i></a>
 
-    <br>
+          <br>
 
-    <input type="range" min="0" max="100000000" [value]="soundProgress.position" class="custom-range" id="customRange1">
-
-    <br>
-
-    <table class="table">
+          <input type="range" min="0" max="100000000" [value]="soundProgress.position" class="custom-range" id="customRange1">
+        </td>
+      </tr>
       <tr *ngFor="let song of player.playlist"
         [ngClass]="{
           'table-warning': song === player.song
@@ -133,8 +133,6 @@
         </td>
       </tr>
     </table>
-
-  </div>
 
 
 </div>
