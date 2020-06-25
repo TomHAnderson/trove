@@ -17,6 +17,7 @@ import { IdentifierListComponent } from './component-ui/identifier-list/identifi
 import { CreatorListUiComponent } from './component-ui/creator-list-ui/creator-list-ui.component';
 import { ListenedToComponent } from './component/listened-to/listened-to.component';
 import { SettingsComponent } from './component/settings/settings.component';
+import { HowlerPlayerComponent } from './component-ui/howler-player/howler-player.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { SettingsComponent } from './component/settings/settings.component';
     IdentifierListComponent,
     CreatorListUiComponent,
     ListenedToComponent,
-    SettingsComponent
+    SettingsComponent,
+    HowlerPlayerComponent
   ],
   imports: [
     CommonModule,

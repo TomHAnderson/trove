@@ -7,6 +7,7 @@ import { environment } from '@env';
 import { PerformanceDateVenueCoverageResult } from '../types/performance-date-venue-coverage-result';
 import { Identifier } from '../types/identifier';
 import * as $ from 'jquery';
+import { PlaylistResult } from '../types/playlist-result';
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +55,12 @@ export class IdentifierService {
   findByYear(creatorId: number, year: number): Observable<PerformanceDateVenueCoverageResult> {
     return this.http.get<PerformanceDateVenueCoverageResult>(
       `${environment.apiUrl}/internet-archive/identifier-performance-date-by-year/${creatorId}/${year}`
+    );
+  }
+
+  getPlaylist(identifier: Identifier): Observable<PlaylistResult> {
+    return this.http.get<PlaylistResult>(
+      `${environment.apiUrl}/internet-archive/get-playlist/${identifier.archiveIdentifier}`
     );
   }
 }

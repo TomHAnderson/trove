@@ -7,6 +7,7 @@ import { DatabaseService } from '@module/data/service/database.service';
 import { TroveLayoutComponent } from '@module/trove/layout/trove-layout/trove-layout.component';
 import { ListenedTo } from '@module/data/types/listened-to';
 import { SettingsService } from '@module/data/service/settings.service';
+import { HowlerPlayer, SongInterface, SoundProgressInterface } from '@module/data/class/howler-player';
 
 @Component({
   selector: 'app-identifier',
@@ -20,7 +21,9 @@ export class IdentifierComponent {
   public isFavorite = false;
   public isBookmarked = false;
   public listenedTo: ListenedTo;
-  public settings;
+  public settings: any;
+  public player: HowlerPlayer;
+  public soundProgress: SoundProgressInterface;
 
   constructor(
     private titleService: Title,
@@ -31,13 +34,44 @@ export class IdentifierComponent {
     private troveLayout: TroveLayoutComponent,
     private settingsService: SettingsService
   ) {
+    this.soundProgress = {
+      played: 0,
+      remaining: 0,
+      position: 0
+    };
 
-    settingsService.get().subscribe(settings => this.settings = settings);
+    this.settingsService.get().subscribe(settings => this.settings = settings);
 
     this.route.params.subscribe(params => {
       this.identifierService.find(params.id)
         .subscribe(identifier => {
           this.identifier = identifier;
+
+          this.identifierService.getPlaylist(identifier).subscribe(archiveFilelist => {
+            const playlist: SongInterface[] = [];
+            archiveFilelist.result.forEach(file => {
+              let mp3File = '';
+              file.sources.forEach(source => {
+                if (source.type === 'mp3') {
+                  mp3File = 'https://archive.org' + source.file;
+                }
+              });
+
+              playlist.push({
+                title: file.title,
+                file: mp3File,
+              });
+            });
+
+            this.player = new HowlerPlayer(playlist);
+
+            console.log(playlist);
+
+            this.player.$progress.subscribe(soundProgress => {
+              this.soundProgress = soundProgress;
+            });
+
+          });
 
           this.titleService.setTitle(
             identifier._embedded.creator.name
