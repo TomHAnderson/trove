@@ -1,5 +1,6 @@
 import { Howl } from 'howler';
 import { Subject } from 'rxjs';
+import { ROUTER_CONFIGURATION } from '@angular/router';
 
 /**
  * From: https://stackblitz.com/edit/howler-player
@@ -104,31 +105,31 @@ export class HowlerPlayer {
 
   /** */
   public skip(direction: string = 'next'): void {
-    let newIndex = this.song.index;
-    if (direction === 'next') {
-      newIndex = (newIndex + 1) >= this.playlist.length ? 0 : newIndex + 1;
-    } else {
-      newIndex = (newIndex - 1) < 0 ? this.playlist.length - 1 : newIndex - 1;
-    }
+    let song: SongInterface = null;
 
-    this.skipTo(newIndex);
-  }
+    switch (direction) {
+      case 'next':
+        if (this.song.index + 1 >= this.playlist.length) {
+          return;
+        }
 
-  /***/
-  public skipTo(index: number) {
-    const wasPlaying = this.isPlaying;
+        song = this.playlist[this.song.index + 1];
+        break;
+      case 'prev':
+        if (this.song.index - 1 < 0) {
+          return;
+        }
 
-    if (index < 0 || index >= this.playlist.length ) {
-      index = 0;
+        song = this.playlist[this.song.index - 1];
+        break;
+      default:
+        alert('Invalid skip direction');
+        return;
     }
 
     this.stop();
-
-    this.song = this.playlist[index];
-
-    if (wasPlaying) {
-      this.play();
-    }
+    this.song = song;
+    this.play();
   }
 
   /** */
