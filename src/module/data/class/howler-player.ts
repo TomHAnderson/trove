@@ -133,13 +133,12 @@ export class HowlerPlayer {
 
   /** */
   public fastforward(secs: number = 5): void {
-    const sound = this.song.howl;
-    const timeToSeek = sound.seek() + secs;
+    const timeToSeek = this.song.howl.seek() + secs;
 
-    if ( timeToSeek >= sound.duration()) {
+    if ( timeToSeek >= this.song.howl.duration()) {
       this.skip();
     } else {
-      sound.seek( timeToSeek );
+      this.song.howl.seek( timeToSeek );
     }
   }
 
