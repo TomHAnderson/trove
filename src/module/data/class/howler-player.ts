@@ -40,6 +40,7 @@ export class HowlerPlayer {
         src: [playlistSong.file],
         html5: true,
         autoplay: false,
+        preload: false,
         onplay: () => {
           requestAnimationFrame( this.seekStep );  //  PROGRESS STEP CALL
         },
