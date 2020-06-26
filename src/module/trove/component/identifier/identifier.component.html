@@ -107,11 +107,11 @@
           ><i class="fas fa-arrow-alt-to-left"></i></a>
 
           <a class="btn btn-warning btn-lg player-control"
-            (click)="player.pause()"
+            (click)="player.song.howl.playing() ? player.song.howl.pause() : player.song.howl.play()"
           ><i class="fas"
             [ngClass]="{
-              'fa-play': ! player.getSong().howl.playing(),
-              'fa-pause': player.getSong().howl.playing()
+              'fa-play': ! player.song.howl.playing(),
+              'fa-pause': player.song.howl.playing()
             }"
           ></i></a>
 
@@ -126,11 +126,10 @@
       </tr>
       <tr *ngFor="let song of player.getPlaylist()"
         [ngClass]="{
-          'table-warning': song === player.getSong()
+          'table-warning': song === player.song
         }">
-        <td (click)="player.play(song)">
+        <td (click)="player.song.howl.stop() && song.howl.play()">
           {{ song.title }}<br>
-          {{ song.file }}
         </td>
         <td class="text-right">
           {{ song.duration }}

@@ -29,32 +29,32 @@ export class HowlerPlayer {
   private songPlaying: SongInterface;
 
   /**
-   * This is the current song playing
+   * This is the current song playing.  Implementing classes can change
+   * the current song.
    */
-  private song: SongInterface;
+  public song: SongInterface;
 
   /**
    * The loaded playlist
    */
   private playlist: SongInterface[];
+
   /**
    * Tracks track progress as it plays
    */
   public $progress: BehaviorSubject<SoundProgressInterface>;
+
   /**
    * When hitting next or prev over and over it tries to load each song
    * immediately.  Using this Subject allows buffering of commands so only
    * after the debounceTime has passed will it load the song and start playing.
    */
   private $skipPause: Subject<string>;
+
   /**
    * When playing try to stop the phone screen from sleeping
    */
   private noSleep: NoSleep;
-  /**
-   * The latest progress.  Used for unpause
-   */
-  private progress: SoundProgressInterface;
 
   /**
    * Only one playlist can be loaded into a player at a time.  This works
@@ -68,10 +68,8 @@ export class HowlerPlayer {
       position: 0
     });
     this.$skipPause = new Subject();
-
     this.$skipPause.pipe(debounceTime(600))
       .subscribe(action => this.song.howl.play());
-    this.$progress.subscribe(progress => this.progress = progress);
 
     // Build the howl and other song items
     playlist.forEach((playlistSong, index) => {
@@ -82,10 +80,11 @@ export class HowlerPlayer {
         autoplay: false,
         preload: false,
         onplay: () => {
-          if (this.songPlaying.howl.playing()) {
+          if (this.song !== this.songPlaying && this.songPlaying.howl.playing()) {
             this.songPlaying.howl.stop();
           }
           this.noSleep.enable();
+          this.song = playlist[index];
           this.songPlaying = this.song;
           requestAnimationFrame(this.seekStep);
         },
@@ -98,12 +97,12 @@ export class HowlerPlayer {
         },
         onstop: () => {
           this.noSleep.disable();
+          requestAnimationFrame(this.seekStep);
         },
         onend: () => {
           this.skip('next');
         },
         onloaderror: (error) => {
-          alert('error');
           console.log(error);
         }
       });
@@ -114,36 +113,6 @@ export class HowlerPlayer {
     this.songPlaying = this.song;
   }
 
-  public play(playSong: SongInterface = null) {
-    this.song = playSong ? playSong : this.song;
-    this.song.howl.play();
-  }
-
-  public pause(): void {
-    if (this.song.howl.playing()) {
-      this.song.howl.pause();
-    } else {
-      const seek = this.progress.played;
-
-      this.song.howl.play();
-      this.song.howl.seek(seek);
-    }
-  }
-
-  /** */
-  public stop(): void {
-    this.song.howl.stop();
-
-    // Reset progress
-    const progress: SoundProgressInterface = {
-      played: 0,
-      remaining: 0,
-      position: 0
-    };
-
-    this.$progress.next(progress);
-  }
-
   /** */
   public skip(direction: string = 'next'): void {
     let song: SongInterface = null;
@@ -151,7 +120,7 @@ export class HowlerPlayer {
     switch (direction) {
       case 'next':
         if (this.song.index + 1 >= this.playlist.length) {
-          this.stop();
+          this.song.howl.stop();
           return;
         }
 

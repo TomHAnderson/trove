@@ -43,7 +43,7 @@ export class IdentifierComponent {
 
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationStart) {
-        this.player.stop();
+        this.player.song.howl.stop();
       }
     });
 
