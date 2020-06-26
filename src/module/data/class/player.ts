@@ -12,13 +12,22 @@ import NoSleep from 'nosleep.js';
  */
 export class Song {
   private howl: Howl;
-  public index: number;
+  // tslint:disable-next-line:variable-name
+  private _index: number;
 
   constructor(
     readonly title: string,
     readonly file: string,
     readonly duration: string
   ) {
+  }
+
+  public set index(index) {
+    this._index = index;
+  }
+
+  public get index() {
+    return this._index;
   }
 
   public setHowl(howl: Howl) {
