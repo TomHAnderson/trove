@@ -80,7 +80,8 @@ export class Player {
    * This is the current song playing.  Implementing classes can change
    * the current song.
    */
-  public song: Song;
+  // tslint:disable-next-line:variable-name
+  private _song: Song;
 
   /**
    * The loaded playlist
@@ -131,7 +132,7 @@ export class Player {
             this.songPlaying.stop();
           }
           this.noSleep.enable();
-          this.song = playlist[index];
+          this._song = playlist[index];
           this.songPlaying = this.song;
           requestAnimationFrame(this.seekStep);
         },
@@ -159,8 +160,12 @@ export class Player {
     });
 
     this.playlist = playlist;
-    this.song = playlist[0];
+    this._song = playlist[0];
     this.songPlaying = this.song;
+  }
+
+  public get song() {
+    return this._song;
   }
 
   /**
@@ -187,7 +192,7 @@ export class Player {
         break;
     }
 
-    this.song = song;
+    this._song = song;
     this.$skipPause.next('play');
   }
 
