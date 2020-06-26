@@ -64,10 +64,13 @@ export class IdentifierComponent {
                 }
               });
 
-              playlist.push({
+              const newSong: SongInterface = {
                 title: file.title,
                 file: mp3File,
-              });
+                duration: this.formatSeconds(file.duration)
+              };
+
+              playlist.push(newSong);
             });
 
             this.player = new HowlerPlayer(playlist);
@@ -175,5 +178,37 @@ export class IdentifierComponent {
 
       this.database.setItem('recent', recent);
     });
+  }
+
+  private formatSeconds(seconds) {
+    let hourPart   = Math.floor(seconds / 3600);
+    const minutePart = Math.floor((seconds - (hourPart * 3600)) / 60);
+    const secondPart = Math.round(seconds - (hourPart * 3600) - (minutePart * 60));
+
+    let hourFormat = hourPart.toString();
+    let minuteFormat = minutePart.toString();
+    let secondFormat = secondPart.toString();
+
+    if (hourPart > 0 && hourPart < 10) {
+      hourFormat = '0' + hourPart;
+    }
+
+    if (hourPart > 0) {
+      hourFormat += ':';
+    } else {
+      hourFormat = '';
+    }
+
+    if (minutePart < 10) {
+      minuteFormat = '0' + minutePart;
+    }
+
+    minuteFormat += ':';
+
+    if (secondPart < 10) {
+      secondFormat = '0' + secondPart;
+    }
+
+    return hourFormat + minuteFormat + secondFormat;
   }
 }

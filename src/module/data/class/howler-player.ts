@@ -10,6 +10,7 @@ import NoSleep from 'nosleep.js';
 export interface SongInterface {
   title: string;
   file: string;
+  duration: string;
   howl?: Howl;
   index?: number;
 }

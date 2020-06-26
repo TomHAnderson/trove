@@ -97,11 +97,11 @@
 
   <pre class="description" *ngIf="showDescription && ! identifier._embedded.source?.description">{{ identifier.description || 'No description available' }}</pre>
 
-  <hr>
+    <hr>
 
     <table class="table player" *ngIf="player && ! settings.useArchivePlayer">
       <tr>
-        <td class="text-center">
+        <td style="border-top: none;" class="text-center" colspan="2">
           <a class="btn btn-warning btn-lg player-control"
             (click)="player.skip('prev')"
           ><i class="fas fa-arrow-alt-to-left"></i></a>
@@ -130,6 +130,9 @@
         }">
         <td (click)="player.play(song)">
           {{ song.title }}
+        </td>
+        <td class="text-right">
+          {{ song.duration }}
         </td>
       </tr>
     </table>
