@@ -1,10 +1,10 @@
 import { Howl } from 'howler';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 import NoSleep from 'nosleep.js';
+import { first, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 
 /**
- * From: https://stackblitz.com/edit/howler-player
- * ** Heavily modified for Trove
+ * This controls the mp3 playback.
  */
 
 export interface SongInterface {
@@ -16,24 +16,64 @@ export interface SongInterface {
 }
 
 export interface SoundProgressInterface {
-  played: number;    //  tiempo transcurrido s
-  remaining: number; //  timpo restante
-  position: number;  //  0-1% reproducido
+  played: number;
+  remaining: number;
+  position: number;  // 0-1
 }
 
 export class HowlerPlayer {
-  public song: SongInterface;
-  public playlist: SongInterface[];
-  public $progress: Subject<SoundProgressInterface>;
-  private currentSoundProgress: SoundProgressInterface;
-  public isPlaying: boolean;
-  private noSleep: any;
+  /**
+   * The songPlaying is changed only when play() is called.  It is used
+   * to stop the previous song if it is playing.
+   */
+  private songPlaying: SongInterface;
 
-  /** */
+  /**
+   * This is the current song playing
+   */
+  private song: SongInterface;
+
+  /**
+   * The loaded playlist
+   */
+  private playlist: SongInterface[];
+  /**
+   * Tracks track progress as it plays
+   */
+  public $progress: BehaviorSubject<SoundProgressInterface>;
+  /**
+   * When hitting next or prev over and over it tries to load each song
+   * immediately.  Using this Subject allows buffering of commands so only
+   * after the debounceTime has passed will it load the song and start playing.
+   */
+  private $skipPause: Subject<string>;
+  /**
+   * When playing try to stop the phone screen from sleeping
+   */
+  private noSleep: NoSleep;
+  /**
+   * The latest progress.  Used for unpause
+   */
+  private progress: SoundProgressInterface;
+
+  /**
+   * Only one playlist can be loaded into a player at a time.  This works
+   * because the only way to play songs is through a playlist on an identifier
+   */
   constructor(playlist: SongInterface[]) {
-    this.song = null;
     this.noSleep = new NoSleep();
+    this.$progress = new BehaviorSubject({
+      played: 0,
+      remaining: 0,
+      position: 0
+    });
+    this.$skipPause = new Subject();
 
+    this.$skipPause.pipe(debounceTime(600))
+      .subscribe(action => this.song.howl.play());
+    this.$progress.subscribe(progress => this.progress = progress);
+
+    // Build the howl and other song items
     playlist.forEach((playlistSong, index) => {
       playlist[index].index = index;
       playlist[index].howl = new Howl({
@@ -42,51 +82,51 @@ export class HowlerPlayer {
         autoplay: false,
         preload: false,
         onplay: () => {
-          requestAnimationFrame( this.seekStep );  //  PROGRESS STEP CALL
+          if (this.songPlaying.howl.playing()) {
+            this.songPlaying.howl.stop();
+          }
+          this.noSleep.enable();
+          this.songPlaying = this.song;
+          requestAnimationFrame(this.seekStep);
         },
         onseek: () => {
-          // Start upating the progress of the track.
-          requestAnimationFrame( this.seekStep );
+          // Upating the track progress
+          requestAnimationFrame(this.seekStep);
+        },
+        onpause: () => {
+          this.noSleep.disable();
+        },
+        onstop: () => {
+          this.noSleep.disable();
         },
         onend: () => {
           this.skip('next');
+        },
+        onloaderror: (error) => {
+          alert('error');
+          console.log(error);
         }
       });
     });
 
     this.playlist = playlist;
     this.song = playlist[0];
-
-    this.$progress = new Subject();
-    this.$progress.subscribe(soundProgress => this.currentSoundProgress = soundProgress);
-    this.$progress.next({
-      played: 0,
-      remaining: 0,
-      position: 0
-    });
+    this.songPlaying = this.song;
   }
 
   public play(playSong: SongInterface = null) {
-    this.stop();
-
     this.song = playSong ? playSong : this.song;
-
     this.song.howl.play();
-    this.isPlaying = true;
-    this.noSleep.enable();
   }
 
   public pause(): void {
-    if (this.isPlaying) {
+    if (this.song.howl.playing()) {
       this.song.howl.pause();
-      this.isPlaying = false;
-      this.noSleep.disable();
     } else {
-      const seek = this.currentSoundProgress.played;
-      this.song.howl.stop();
+      const seek = this.progress.played;
+
       this.song.howl.play();
       this.song.howl.seek(seek);
-      this.isPlaying = true;
     }
   }
 
@@ -101,10 +141,7 @@ export class HowlerPlayer {
       position: 0
     };
 
-    this.$progress.next( progress );
-
-    this.isPlaying = false;
-    this.noSleep.disable();
+    this.$progress.next(progress);
   }
 
   /** */
@@ -114,6 +151,7 @@ export class HowlerPlayer {
     switch (direction) {
       case 'next':
         if (this.song.index + 1 >= this.playlist.length) {
+          this.stop();
           return;
         }
 
@@ -131,9 +169,8 @@ export class HowlerPlayer {
         return;
     }
 
-    this.stop();
     this.song = song;
-    this.play();
+    this.$skipPause.next('play');
   }
 
   /** */
@@ -176,8 +213,11 @@ export class HowlerPlayer {
     }
   }
 
-  /** */
-  public onPlay(): Subject<SoundProgressInterface> {
-    return this.$progress;
+  public getSong() {
+    return this.song;
+  }
+
+  public getPlaylist() {
+    return this.playlist;
   }
 }

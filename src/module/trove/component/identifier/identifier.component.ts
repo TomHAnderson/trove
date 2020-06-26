@@ -181,7 +181,7 @@ export class IdentifierComponent {
   }
 
   private formatSeconds(seconds) {
-    let hourPart   = Math.floor(seconds / 3600);
+    const hourPart = Math.floor(seconds / 3600);
     const minutePart = Math.floor((seconds - (hourPart * 3600)) / 60);
     const secondPart = Math.round(seconds - (hourPart * 3600) - (minutePart * 60));
 

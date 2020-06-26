@@ -110,8 +110,8 @@
             (click)="player.pause()"
           ><i class="fas"
             [ngClass]="{
-              'fa-play': ! player.isPlaying,
-              'fa-pause': player.isPlaying
+              'fa-play': ! player.getSong().howl.playing(),
+              'fa-pause': player.getSong().howl.playing()
             }"
           ></i></a>
 
@@ -124,12 +124,13 @@
           <input type="range" min="0" max="100000000" [value]="soundProgress.position" class="custom-range" id="customRange1">
         </td>
       </tr>
-      <tr *ngFor="let song of player.playlist"
+      <tr *ngFor="let song of player.getPlaylist()"
         [ngClass]="{
-          'table-warning': song === player.song
+          'table-warning': song === player.getSong()
         }">
         <td (click)="player.play(song)">
-          {{ song.title }}
+          {{ song.title }}<br>
+          {{ song.file }}
         </td>
         <td class="text-right">
           {{ song.duration }}
