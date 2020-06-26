@@ -107,11 +107,11 @@
           ><i class="fas fa-arrow-alt-to-left"></i></a>
 
           <a class="btn btn-warning btn-lg player-control"
-            (click)="player.song.howl.playing() ? player.song.howl.pause() : player.song.howl.play()"
+            (click)="player.song.playing() ? player.song.pause() : player.song.play()"
           ><i class="fas"
             [ngClass]="{
-              'fa-play': ! player.song.howl.playing(),
-              'fa-pause': player.song.howl.playing()
+              'fa-play': ! player.song.playing(),
+              'fa-pause': player.song.playing()
             }"
           ></i></a>
 
@@ -124,11 +124,11 @@
           <input type="range" min="0" max="100000000" [value]="soundProgress.position" class="custom-range" id="customRange1">
         </td>
       </tr>
-      <tr *ngFor="let song of player.getPlaylist()"
+      <tr *ngFor="let song of player.playlist"
         [ngClass]="{
           'table-warning': song === player.song
         }">
-        <td (click)="player.song.howl.stop() && song.howl.play()">
+        <td (click)="player.song.stop() && song.play()">
           {{ song.title }}<br>
         </td>
         <td class="text-right">

@@ -1,43 +1,82 @@
-import { Howl } from 'howler';
-import { Subject, BehaviorSubject } from 'rxjs';
+import { Howler, Howl } from 'howler';
+import { Subject, BehaviorSubject, from } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import NoSleep from 'nosleep.js';
-import { first, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 
 /**
  * This controls the mp3 playback.
  */
 
-export interface SongInterface {
-  title: string;
-  file: string;
-  duration: string;
-  howl?: Howl;
-  index?: number;
+/**
+ * Per-song implementation
+ */
+export class Song {
+  private howl: Howl;
+  public index: number;
+
+  constructor(
+    readonly title: string,
+    readonly file: string,
+    readonly duration: string
+  ) {
+  }
+
+  public setHowl(howl: Howl) {
+    this.howl = howl;
+  }
+
+  public play() {
+    return this.howl.play();
+  }
+
+  public stop() {
+    return this.howl.stop();
+  }
+
+  public pause() {
+    return this.howl.pause();
+  }
+
+  public playing() {
+    return this.howl.playing();
+  }
+
+  public seek(seekTo: number = null) {
+    return this.howl.seek();
+  }
+
+  public howlDuration() {
+    return this.howl.duration();
+  }
 }
 
+
+/**
+ * Progress through a song
+ */
 export interface SoundProgressInterface {
   played: number;
   remaining: number;
   position: number;  // 0-1
 }
 
-export class HowlerPlayer {
+export class Player {
   /**
    * The songPlaying is changed only when play() is called.  It is used
    * to stop the previous song if it is playing.
    */
-  private songPlaying: SongInterface;
+  private songPlaying: Song;
 
   /**
    * This is the current song playing.  Implementing classes can change
    * the current song.
    */
-  public song: SongInterface;
+  public song: Song;
 
   /**
    * The loaded playlist
    */
-  private playlist: SongInterface[];
+  readonly playlist: Song[];
 
   /**
    * Tracks track progress as it plays
@@ -60,7 +99,7 @@ export class HowlerPlayer {
    * Only one playlist can be loaded into a player at a time.  This works
    * because the only way to play songs is through a playlist on an identifier
    */
-  constructor(playlist: SongInterface[]) {
+  constructor(playlist: Song[]) {
     this.noSleep = new NoSleep();
     this.$progress = new BehaviorSubject({
       played: 0,
@@ -69,19 +108,18 @@ export class HowlerPlayer {
     });
     this.$skipPause = new Subject();
     this.$skipPause.pipe(debounceTime(600))
-      .subscribe(action => this.song.howl.play());
+      .subscribe(action => this.song.play());
 
     // Build the howl and other song items
     playlist.forEach((playlistSong, index) => {
-      playlist[index].index = index;
-      playlist[index].howl = new Howl({
+      const howl = new Howl({
         src: [playlistSong.file],
         html5: true,
         autoplay: false,
         preload: false,
         onplay: () => {
-          if (this.song !== this.songPlaying && this.songPlaying.howl.playing()) {
-            this.songPlaying.howl.stop();
+          if (this.song !== this.songPlaying && this.songPlaying.playing()) {
+            this.songPlaying.stop();
           }
           this.noSleep.enable();
           this.song = playlist[index];
@@ -106,6 +144,9 @@ export class HowlerPlayer {
           console.log(error);
         }
       });
+
+      playlist[index].index = index;
+      playlist[index].setHowl(howl);
     });
 
     this.playlist = playlist;
@@ -113,14 +154,16 @@ export class HowlerPlayer {
     this.songPlaying = this.song;
   }
 
-  /** */
+  /**
+   * Move forward or backwards by one song
+   */
   public skip(direction: string = 'next'): void {
-    let song: SongInterface = null;
+    let song: Song = null;
 
     switch (direction) {
       case 'next':
         if (this.song.index + 1 >= this.playlist.length) {
-          this.song.howl.stop();
+          this.song.stop();
           return;
         }
 
@@ -133,43 +176,43 @@ export class HowlerPlayer {
 
         song = this.playlist[this.song.index - 1];
         break;
-      default:
-        alert('Invalid skip direction');
-        return;
     }
 
     this.song = song;
     this.$skipPause.next('play');
   }
 
-  /** */
+  /**
+   * Not used yet
+   */
   public fastforward(secs: number = 5): void {
-    const timeToSeek = this.song.howl.seek() + secs;
+    const timeToSeek = this.song.seek() + secs;
 
-    if ( timeToSeek >= this.song.howl.duration()) {
+    if ( timeToSeek >= this.song.howlDuration()) {
       this.skip();
     } else {
-      this.song.howl.seek( timeToSeek );
+      this.song.seek( timeToSeek );
     }
   }
 
-  /** */
+  /**
+   * Not used yet
+   */
   public rewind(secs: number = 5): void {
-    const sound = this.song.howl;
-    let timeToSeek = sound.seek() - secs;
+    let timeToSeek = this.song.seek() - secs;
 
     timeToSeek = timeToSeek <= 0 ? 0 : timeToSeek;
 
-    sound.seek( timeToSeek );
+    this.song.seek( timeToSeek );
   }
 
-  /** */
+  /**
+   * Send the $progress
+   */
   private seekStep = () => {
-    const sound = this.song.howl;
-
-    if ( sound.playing() ) {
-      const seek = sound.seek();
-      const duration = sound.duration();
+    if ( this.song.playing() ) {
+      const seek = this.song.seek();
+      const duration = this.song.howlDuration();
       const progress: SoundProgressInterface = {
         played:    seek,
         remaining: duration - seek,
@@ -180,13 +223,5 @@ export class HowlerPlayer {
 
       requestAnimationFrame( this.seekStep );
     }
-  }
-
-  public getSong() {
-    return this.song;
-  }
-
-  public getPlaylist() {
-    return this.playlist;
   }
 }

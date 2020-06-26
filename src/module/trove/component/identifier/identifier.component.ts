@@ -7,7 +7,7 @@ import { DatabaseService } from '@module/data/service/database.service';
 import { TroveLayoutComponent } from '@module/trove/layout/trove-layout/trove-layout.component';
 import { ListenedTo } from '@module/data/types/listened-to';
 import { SettingsService } from '@module/data/service/settings.service';
-import { HowlerPlayer, SongInterface, SoundProgressInterface } from '@module/data/class/howler-player';
+import { Player, Song, SoundProgressInterface } from '@module/data/class/player';
 
 @Component({
   selector: 'app-identifier',
@@ -22,7 +22,7 @@ export class IdentifierComponent {
   public isBookmarked = false;
   public listenedTo: ListenedTo;
   public settings: any;
-  public player: HowlerPlayer;
+  public player: Player;
   public soundProgress: SoundProgressInterface;
 
   constructor(
@@ -43,7 +43,7 @@ export class IdentifierComponent {
 
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationStart) {
-        this.player.song.howl.stop();
+        this.player.song.stop();
       }
     });
 
@@ -55,8 +55,8 @@ export class IdentifierComponent {
           this.identifier = identifier;
 
           this.identifierService.getPlaylist(identifier).subscribe(archiveFilelist => {
-            const playlist: SongInterface[] = [];
-            archiveFilelist.result.forEach(file => {
+            const playlist: Song[] = [];
+            archiveFilelist.result.forEach((file, index) => {
               let mp3File = '';
               file.sources.forEach(source => {
                 if (source.type === 'mp3') {
@@ -64,21 +64,20 @@ export class IdentifierComponent {
                 }
               });
 
-              const newSong: SongInterface = {
-                title: file.title,
-                file: mp3File,
-                duration: this.formatSeconds(file.duration)
-              };
+              const newSong = new Song(
+                file.title,
+                mp3File,
+                this.formatSeconds(file.duration)
+              );
 
               playlist.push(newSong);
             });
 
-            this.player = new HowlerPlayer(playlist);
+            this.player = new Player(playlist);
 
             this.player.$progress.subscribe(soundProgress => {
               this.soundProgress = soundProgress;
             });
-
           });
 
           this.titleService.setTitle(
