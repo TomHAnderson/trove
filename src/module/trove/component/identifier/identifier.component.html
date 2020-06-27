@@ -99,7 +99,7 @@
 
     <hr>
 
-    <table class="table player" *ngIf="player && ! settings.useArchivePlayer">
+    <table class="table player" *ngIf="false && player && settings.useArchivePlayer">
       <tr>
         <td style="border-top: none;" class="text-center" colspan="2">
           <a class="btn btn-warning btn-lg player-control"
@@ -139,7 +139,7 @@
 
 
     <iframe
-      *ngIf="settings.useArchivePlayer"
+      *ngIf="true || settings.useArchivePlayer"
       [src]="embedUrl"
       width="100%"
       height="380px"
