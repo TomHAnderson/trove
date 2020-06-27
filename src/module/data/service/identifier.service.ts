@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HalLink } from '../types/hal-link';
 import { HalIdentifier } from '../types/hal-identifier';
 import { environment } from '@env';
@@ -59,6 +59,8 @@ export class IdentifierService {
   }
 
   getPlaylist(identifier: Identifier): Observable<PlaylistResult> {
+    const shortCircuit: PlaylistResult = {result: []};
+    return of(shortCircuit);
     return this.http.get<PlaylistResult>(
       `${environment.apiUrl}/internet-archive/get-playlist/${identifier.archiveIdentifier}`
     );
