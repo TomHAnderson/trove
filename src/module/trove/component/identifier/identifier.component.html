@@ -63,7 +63,7 @@
       <small><strong>{{ identifier.archiveIdentifier }}</strong></small>
 
       <div
-        class="etreedb-summary"
+        class="lcdb-summary"
         *ngIf="identifier._embedded.source?.summary"
         [innerHtml]="identifier._embedded.source?.summary"
       >
@@ -76,9 +76,9 @@
     class="btn btn-sm btn-warning"
     style="margin-top: 10px; display: block"
     target="_blank"
-    href="https://etreedb.org/shn/{{ identifier._embedded.source?.id }}"
+    href="https://lcdb.org/shn/{{ identifier._embedded.source?.id }}"
   >
-    etreedb.org source
+    lcdb.org source
   </a>
 
   <a
@@ -93,7 +93,7 @@
     Show Description
   </a>
 
-  <pre class="etreedb-description" *ngIf="showDescription && identifier._embedded.source?.description">{{ identifier._embedded.source?.description }}</pre>
+  <pre class="lcdb-description" *ngIf="showDescription && identifier._embedded.source?.description">{{ identifier._embedded.source?.description }}</pre>
 
   <pre class="description" *ngIf="showDescription && ! identifier._embedded.source?.description">{{ identifier.description || 'No description available' }}</pre>
 

@@ -4,8 +4,7 @@
 
 export const environment = {
   production: false,
-//  apiUrl: 'https://apiskeletons1.ngrok.io',
-  apiUrl: 'https://api.etreedb.org',
+  apiUrl: 'https://api.lcdb.org',
 };
 
 /*

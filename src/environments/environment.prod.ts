@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://api.etreedb.org',
+  apiUrl: 'https://api.lcdb.org',
 };
